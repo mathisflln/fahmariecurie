@@ -10,117 +10,80 @@
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: "Host Grotesk", sans-serif; background: #f5f5f5; min-height: 100vh; }
-    
-    /* SIDEBAR */
-    .sidebar { position: fixed; left: 0; top: 0; bottom: 0; width: 256px; background: #ffffff; border-right: 1px solid #e5e5e5; display: flex; flex-direction: column; z-index: 100; }
+    body { font-family: "Host Grotesk", sans-serif; background: #f8f9fa; min-height: 100vh; }
+    .sidebar { position: fixed; left: 0; top: 0; bottom: 0; width: 280px; background: #ffffff; border-right: 1px solid #e5e5e5; display: flex; flex-direction: column; z-index: 100; }
     .sidebar-header { padding: 24px; border-bottom: 1px solid #e5e5e5; }
     .sidebar-logo { display: flex; align-items: center; text-decoration: none; }
     .sidebar-logo img { height: 40px; width: auto; }
     .sidebar-nav { flex: 1; padding: 16px; overflow-y: auto; }
-    .nav-section { margin-bottom: 24px; }
-    .nav-section-title { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; color: #999; margin-bottom: 8px; padding: 0 12px; letter-spacing: 0.5px; }
+    .nav-section { margin-bottom: 32px; }
+    .nav-section-title { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; color: #999; margin-bottom: 8px; padding: 0 12px; letter-spacing: 0.5px; }
     .nav-item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; margin-bottom: 4px; border-radius: 8px; color: #666; text-decoration: none; font-size: 0.9rem; transition: all 0.2s ease; cursor: pointer; }
     .nav-item:hover { background: #f8f9fa; color: #0d0d0d; }
     .nav-item.active { background: #0d0d0d; color: #ffffff; }
+    .nav-item svg { width: 20px; height: 20px; flex-shrink: 0; }
     .sidebar-footer { padding: 16px; border-top: 1px solid #e5e5e5; }
     .user-info { display: flex; align-items: center; gap: 12px; padding: 8px 12px; margin-bottom: 8px; }
     .user-avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #FBE01D 0%, #fff4a4 100%); display: flex; align-items: center; justify-content: center; font-weight: 600; color: #0d0d0d; font-size: 0.9rem; }
     .user-details { flex: 1; min-width: 0; }
-    .user-name { font-size: 0.9rem; font-weight: 500; color: #0d0d0d; }
+    .user-name { font-size: 0.9rem; font-weight: 500; color: #0d0d0d; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .user-role { font-size: 0.75rem; color: #999; }
     .btn-logout { width: 100%; padding: 10px 12px; background: transparent; border: 1px solid #e5e5e5; border-radius: 8px; color: #666; font-family: "Host Grotesk", sans-serif; font-size: 0.9rem; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 8px; }
     .btn-logout:hover { background: #fee; border-color: #fcc; color: #c33; }
-
-    /* MAIN CONTENT */
-    .main-content { margin-left: 256px; padding: 40px; min-height: 100vh; background: #f5f5f5; }
-    .page-header { margin-bottom: 32px; }
+    .btn-logout svg { width: 16px; height: 16px; }
+    .main-content { margin-left: 280px; padding: 32px; min-height: 100vh; }
+    .page-header { margin-bottom: 32px; display: flex; justify-content: space-between; align-items: center; }
     .page-title { font-size: 2rem; font-weight: 600; color: #0d0d0d; margin-bottom: 8px; }
-    .page-subtitle { font-size: 1rem; color: #666; font-weight: 400; }
-
-    /* DASHBOARD GRID */
-    .dashboard-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 24px; }
-    .left-column { display: flex; flex-direction: column; gap: 24px; }
-    .right-column { display: flex; flex-direction: column; gap: 24px; }
-
-    /* SECTION */
-    .section { background: #ffffff; border-radius: 16px; padding: 24px; }
+    .page-subtitle { font-size: 1rem; color: #666; font-weight: 300; }
+    .mobile-logout { display: none; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 32px; }
+    .stat-card { background: #ffffff; border-radius: 12px; padding: 24px; border: 1px solid #e5e5e5; transition: all 0.2s ease; }
+    .stat-card:hover { border-color: #FBE01D; box-shadow: 0 4px 12px rgba(251, 224, 29, 0.15); }
+    .stat-icon { width: 40px; height: 40px; border-radius: 10px; background: linear-gradient(135deg, #FBE01D 0%, #fff4a4 100%); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+    .stat-icon svg { width: 20px; height: 20px; color: #0d0d0d; }
+    .stat-value { font-size: 1.75rem; font-weight: 600; color: #0d0d0d; margin-bottom: 4px; }
+    .stat-label { font-size: 0.875rem; color: #666; }
+    .content-section { background: #ffffff; border-radius: 12px; padding: 24px; border: 1px solid #e5e5e5; margin-bottom: 24px; }
     .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
     .section-title { font-size: 1.25rem; font-weight: 600; color: #0d0d0d; }
-    .btn-view-all { font-size: 0.875rem; color: #0d0d0d; text-decoration: none; transition: color 0.2s ease; cursor: pointer; font-weight: 500; }
-    .btn-view-all:hover { opacity: 0.7; }
-
-    /* DOCUMENTS */
-    .documents-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-    .document-card { background: #fff; border: 1px solid #e5e5e5; border-radius: 12px; overflow: hidden; cursor: pointer; transition: all 0.2s ease; display: flex; flex-direction: column; }
-    .document-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-    .document-thumbnail { width: 100%; height: 140px; background: #FBE01D; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: #666; position: relative; overflow: hidden; flex-shrink: 0; }
-    .document-thumbnail img { width: 100%; height: 100%; object-fit: cover; }
-    .document-thumbnail-placeholder { font-size: 0.75rem; padding: 20px; text-align: center; }
-    .document-extension { position: absolute; bottom: 8px; right: 8px; background: rgba(255,255,255,0.95); padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; color: #0d0d0d; }
-    .document-body { padding: 16px; display: flex; align-items: flex-start; gap: 12px; flex: 1; }
+    .btn-view-all { font-size: 0.875rem; color: #666; text-decoration: none; transition: color 0.2s ease; }
+    .btn-view-all:hover { color: #0d0d0d; }
+    .document-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+    .document-card { background: #f8f9fa; border-radius: 10px; padding: 20px; cursor: pointer; transition: all 0.2s ease; border: 1px solid transparent; }
+    .document-card:hover { background: #ffffff; border-color: #e5e5e5; transform: translateY(-2px); }
+    .document-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
+    .document-icon { width: 36px; height: 36px; border-radius: 8px; background: #ffffff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .document-icon svg { width: 18px; height: 18px; color: #0d0d0d; }
     .document-info { flex: 1; min-width: 0; }
-    .document-title { font-size: 0.9rem; font-weight: 600; color: #0d0d0d; margin-bottom: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .document-description { font-size: 0.75rem; color: #999; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .btn-download { background: transparent; border: none; padding: 8px; cursor: pointer; color: #666; transition: color 0.2s; flex-shrink: 0; }
-    .btn-download:hover { color: #0d0d0d; }
-    .btn-download svg { width: 18px; height: 18px; }
-
-    /* QUIZ */
-    .quiz-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-    .quiz-card { background: #E5D4FF; border-radius: 16px; padding: 24px; cursor: pointer; transition: all 0.2s ease; position: relative; overflow: hidden; min-height: 160px; display: flex; flex-direction: column; }
-    .quiz-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-    .quiz-icon { width: 48px; height: 48px; background: rgba(255,255,255,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; font-size: 1.5rem; font-weight: 600; }
-    .quiz-title { font-size: 1rem; font-weight: 600; color: #0d0d0d; margin-bottom: 8px; flex: 1; }
-    .quiz-questions { font-size: 0.8rem; color: #666; }
-    .quiz-arrow { position: absolute; bottom: 16px; right: 16px; width: 24px; height: 24px; background: rgba(255,255,255,0.6); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-    .quiz-arrow svg { width: 14px; height: 14px; stroke: #0d0d0d; }
-
-    /* FORMATIONS */
-    .formations-list { display: flex; flex-direction: column; gap: 12px; }
-    .formation-card { background: #fff; border: 1px solid #e5e5e5; border-radius: 12px; padding: 20px; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 16px; }
-    .formation-card:hover { transform: translateX(4px); border-color: #d0d0d0; }
-    .formation-info { flex: 1; min-width: 0; }
-    .formation-categories { display: flex; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
-    .formation-category { font-size: 0.7rem; padding: 4px 10px; border-radius: 20px; font-weight: 800; }
-    .formation-title { font-size: 1rem; font-weight: 600; color: #0d0d0d; margin-bottom: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .formation-description { font-size: 0.85rem; color: #666; margin-bottom: 8px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .formation-duration { font-size: 0.8rem; color: #999; font-weight: 500; }
-    .formation-arrow { width: 32px; height: 32px; background: #f5f5f5; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .formation-arrow svg { width: 16px; height: 16px; stroke: #666; }
-
-    /* EVENTS */
-    .events-list { display: flex; flex-direction: column; gap: 12px; max-height: 800px; overflow-y: auto; }
-    .event-date-group { margin-bottom: 16px; }
-    .event-date-label { font-size: 0.85rem; font-weight: 600; color: #0d0d0d; margin-bottom: 12px; }
-    .event-card { border-radius: 12px; padding: 16px; cursor: pointer; transition: all 0.2s ease; border-left: 4px solid rgba(0,0,0,0.2); }
-    .event-card:hover { transform: translateX(4px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-    .event-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; font-size: 0.75rem; color: rgba(0,0,0,0.6); flex-wrap: wrap; }
-    .event-meta svg { width: 14px; height: 14px; flex-shrink: 0; }
-    .event-meta-item { display: flex; align-items: center; gap: 4px; }
-    .event-title { font-size: 0.95rem; font-weight: 600; color: #0d0d0d; margin-bottom: 4px; }
-    .event-description { font-size: 0.8rem; color: rgba(0,0,0,0.7); }
-
-    .empty-state { text-align: center; padding: 48px 24px; color: #999; }
-
-    /* RESPONSIVE */
-    @media (max-width: 1400px) {
-      .dashboard-grid { grid-template-columns: 1fr; }
-      .quiz-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-
+    .document-title { font-size: 0.95rem; font-weight: 500; color: #0d0d0d; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .document-meta { font-size: 0.8rem; color: #999; }
+    .document-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 12px; padding-top: 12px; border-top: 1px solid #e5e5e5; }
+    .document-type { font-size: 0.75rem; padding: 4px 10px; border-radius: 20px; background: #e5e5e5; color: #666; font-weight: 500; }
+    .document-actions { display: flex; gap: 8px; }
+    .action-btn { width: 28px; height: 28px; border-radius: 6px; background: transparent; border: none; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; color: #666; }
+    .action-btn:hover { background: #e5e5e5; color: #0d0d0d; }
+    .action-btn svg { width: 16px; height: 16px; }
+    .quiz-list { display: flex; flex-direction: column; gap: 12px; }
+    .quiz-item { display: flex; align-items: center; gap: 16px; padding: 16px; background: #f8f9fa; border-radius: 10px; cursor: pointer; transition: all 0.2s ease; border: 1px solid transparent; }
+    .quiz-item:hover { background: #ffffff; border-color: #e5e5e5; transform: translateX(4px); }
+    .quiz-icon { width: 48px; height: 48px; border-radius: 10px; background: linear-gradient(135deg, #FBE01D 0%, #fff4a4 100%); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .quiz-icon svg { width: 24px; height: 24px; color: #0d0d0d; }
+    .quiz-content { flex: 1; min-width: 0; }
+    .quiz-title { font-size: 1rem; font-weight: 500; color: #0d0d0d; margin-bottom: 4px; }
+    .quiz-description { font-size: 0.875rem; color: #666; margin-bottom: 8px; }
+    .quiz-meta { display: flex; gap: 16px; font-size: 0.8rem; color: #999; }
+    .btn-start-quiz { padding: 10px 20px; background: #0d0d0d; color: #fff; border: none; border-radius: 8px; cursor: pointer; font-family: inherit; font-size: 0.9rem; transition: all 0.2s; }
+    .btn-start-quiz:hover { background: #2d2d2d; }
+    .empty-state { text-align: center; padding: 48px 24px; }
+    .empty-icon { width: 64px; height: 64px; margin: 0 auto 16px; opacity: 0.3; }
+    .empty-title { font-size: 1.1rem; font-weight: 500; color: #0d0d0d; margin-bottom: 8px; }
+    .empty-text { font-size: 0.9rem; color: #999; }
+    
     @media (max-width: 1024px) {
-      .sidebar { transform: translateX(-256px); }
-      .main-content { margin-left: 0; padding: 24px; }
-      .documents-grid { grid-template-columns: 1fr; }
-      .quiz-grid { grid-template-columns: 1fr; }
-    }
-
-    @media (max-width: 768px) {
-      .page-title { font-size: 1.5rem; }
-      .main-content { padding: 16px; }
-      .section { padding: 16px; }
-      .quiz-grid { grid-template-columns: 1fr; }
+      .sidebar { transform: translateX(-280px); transition: transform 0.3s ease; }
+      .main-content { margin-left: 0; }
+      .mobile-logout { display: block; }
+      .mobile-logout .btn-logout { max-width: 200px; }
     }
   </style>
 </head>
@@ -135,21 +98,18 @@
 
     <nav class="sidebar-nav">
       <div class="nav-section">
-        <div class="nav-section-title">NAVIGATION</div>
-        <a class="nav-item active" href="dashboard.html">
+        <div class="nav-section-title">Navigation</div>
+        <a class="nav-item active" data-page="dashboard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
           <span>Tableau de bord</span>
         </a>
-        <a class="nav-item" href="documents.html">
+        <a class="nav-item" data-page="documents">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
           <span>Documents</span>
         </a>
-        <a class="nav-item" href="quiz.html">
+        <a class="nav-item" data-page="quiz">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
           <span>Quiz</span>
-        </a>
-        <a class="nav-item" href="calendrier.html">
-          <span>Calendrier</span>
-        </a>
-        <a class="nav-item" href="formations.html">
-          <span>Formations</span>
         </a>
       </div>
     </nav>
@@ -158,7 +118,7 @@
       <div class="user-info">
         <div class="user-avatar" id="user-avatar">M</div>
         <div class="user-details">
-          <div class="user-name" id="user-name">mathis.follin</div>
+          <div class="user-name" id="user-name">Membre</div>
           <div class="user-role">Membre actif</div>
         </div>
       </div>
@@ -172,59 +132,55 @@
   <!-- MAIN CONTENT -->
   <main class="main-content">
     <div class="page-header">
-      <h1 class="page-title">Bienvenue <span id="welcome-name">mathis.follin</span> 👋</h1>
-      <p class="page-subtitle">Voici un aperçu de vos ressources et activités</p>
+      <div>
+        <h1 class="page-title">Bienvenue <span id="welcome-name"></span> 👋</h1>
+        <p class="page-subtitle">Voici un aperçu de vos ressources et activités</p>
+      </div>
+      <div class="mobile-logout">
+        <button class="btn-logout" id="logout-mobile">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          Se déconnecter
+        </button>
+      </div>
     </div>
 
-    <div class="dashboard-grid">
-      <!-- LEFT COLUMN -->
-      <div class="left-column">
-        <!-- DOCUMENTS -->
-        <div class="section">
-          <div class="section-header">
-            <h2 class="section-title">Documents récents</h2>
-            <a class="btn-view-all" onclick="window.location.href='documents.html'">Voir tout</a>
-          </div>
-          <div class="documents-grid" id="documents-grid">
-            <!-- Documents injectés ici -->
-          </div>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
         </div>
-
-        <!-- QUIZ -->
-        <div class="section">
-          <div class="section-header">
-            <h2 class="section-title">Quiz récents</h2>
-            <a class="btn-view-all" onclick="window.location.href='quiz.html'">Voir tout</a>
-          </div>
-          <div class="quiz-grid" id="quiz-grid">
-            <!-- Quiz injectés ici -->
-          </div>
-        </div>
-
-        <!-- FORMATIONS -->
-        <div class="section">
-          <div class="section-header">
-            <h2 class="section-title">Mes formations</h2>
-            <a class="btn-view-all" onclick="window.location.href='formations.html'">Voir tout</a>
-          </div>
-          <div class="formations-list" id="formations-list">
-            <!-- Formations injectées ici -->
-          </div>
-        </div>
+        <div class="stat-value" id="stat-docs">—</div>
+        <div class="stat-label">Documents disponibles</div>
       </div>
 
-      <!-- RIGHT COLUMN -->
-      <div class="right-column">
-        <!-- EVENTS -->
-        <div class="section">
-          <div class="section-header">
-            <h2 class="section-title">Évènements</h2>
-            <a class="btn-view-all" onclick="window.location.href='calendrier.html'">Voir tout</a>
-          </div>
-          <div class="events-list" id="events-list">
-            <!-- Events injectés ici -->
-          </div>
+      <div class="stat-card">
+        <div class="stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
         </div>
+        <div class="stat-value" id="stat-quizzes">—</div>
+        <div class="stat-label">Quiz disponibles</div>
+      </div>
+    </div>
+
+    <!-- DOCUMENTS -->
+    <div class="content-section">
+      <div class="section-header">
+        <h2 class="section-title">Documents récents</h2>
+        <a href="#" class="btn-view-all" id="view-all-docs">Voir tout →</a>
+      </div>
+      <div class="document-grid" id="document-grid">
+        <!-- Documents will be injected here -->
+      </div>
+    </div>
+
+    <!-- QUIZ -->
+    <div class="content-section">
+      <div class="section-header">
+        <h2 class="section-title">Quiz disponibles</h2>
+        <a href="#" class="btn-view-all" id="view-all-quizzes">Voir tout →</a>
+      </div>
+      <div class="quiz-list" id="quiz-list">
+        <!-- Quizzes injected here -->
       </div>
     </div>
   </main>
@@ -235,6 +191,21 @@
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     let currentUserId = null;
+
+    function timeAgo(dateString) {
+      if (!dateString) return '';
+      const d = new Date(dateString);
+      const now = new Date();
+      const s = Math.floor((now - d) / 1000);
+      if (s < 60) return 'À l\'instant';
+      const m = Math.floor(s/60);
+      if (m < 60) return `${m} minute${m>1?'s':''} ago`;
+      const h = Math.floor(m/60);
+      if (h < 24) return `${h} heure${h>1?'s':''} ago`;
+      const days = Math.floor(h/24);
+      if (days < 7) return `Ajouté il y a ${days} jour${days>1?'s':''}`;
+      return d.toLocaleDateString('fr-FR');
+    }
 
     async function checkAuthAndLoad() {
       try {
@@ -253,12 +224,7 @@
         document.getElementById('user-avatar').textContent = initials;
         document.getElementById('welcome-name').textContent = name;
 
-        await Promise.all([
-          loadDocuments(),
-          loadQuizzes(),
-          loadFormations(),
-          loadEvents()
-        ]);
+        await Promise.all([loadStats(), loadDocuments(), loadQuizzes()]);
       } catch (err) {
         console.error('Auth error', err);
         window.location.href = "login.html";
@@ -271,62 +237,94 @@
     }
 
     document.getElementById('logout').addEventListener('click', handleLogout);
+    document.getElementById('logout-mobile').addEventListener('click', handleLogout);
 
-    // LOAD DOCUMENTS
+    async function loadStats() {
+      try {
+        const { count: docsCount } = await supabase
+          .from('documents_meta')
+          .select('id', { count: 'exact', head: true });
+
+        document.getElementById('stat-docs').textContent = docsCount ?? '0';
+
+        const { count: qCount } = await supabase
+          .from('quizzes')
+          .select('id', { count: 'exact', head: true });
+
+        document.getElementById('stat-quizzes').textContent = qCount ?? '0';
+      } catch (err) {
+        console.error('loadStats error', err);
+      }
+    }
+
     async function loadDocuments() {
-      const container = document.getElementById('documents-grid');
-      container.innerHTML = '<div class="empty-state">Chargement...</div>';
-      
+      const container = document.getElementById('document-grid');
+      container.innerHTML = '<p class="empty-text">Chargement des documents…</p>';
       try {
         const { data: docs, error } = await supabase
           .from('documents_meta')
           .select('*')
           .order('created_at', { ascending: false })
-          .limit(4);
+          .limit(12);
 
-        if (error) throw error;
+        if (error) {
+          console.error('loadDocuments error', error);
+          container.innerHTML = '<p class="empty-text">Impossible de charger les documents.</p>';
+          return;
+        }
 
         if (!docs || docs.length === 0) {
-          container.innerHTML = '<div class="empty-state">Aucun document disponible</div>';
+          container.innerHTML = `<div class="empty-state"><div class="empty-icon">📄</div><div class="empty-title">Aucun document</div><div class="empty-text">Aucun document n'a encore été ajouté.</div></div>`;
           return;
         }
 
         container.innerHTML = '';
         
         for (const doc of docs) {
-          const filePath = doc.filepath || doc.filename;
-          const extension = getFileExtension(filePath);
+          let filePath = doc.storage_path || doc.filepath || doc.filename || doc.file_path;
           
-          const card = document.createElement('div');
-          card.className = 'document-card';
+          if (!filePath) {
+            console.error('Aucun chemin trouvé pour le document:', doc);
+            continue;
+          }
+
+          const { data: signedData, error: signError } = await supabase.storage
+            .from('documents')
+            .createSignedUrl(filePath, 3600);
           
-          let thumbnailHTML = '';
-          if (doc.thumbnail_url) {
-            thumbnailHTML = `<img src="${escapeHtml(doc.thumbnail_url)}" alt="${escapeHtml(doc.title)}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-            <div class="document-thumbnail-placeholder" style="display:none;">Image non disponible</div>`;
-          } else {
-            thumbnailHTML = '<div class="document-thumbnail-placeholder">Image à la place des fond de couleur</div>';
+          if (signError) {
+            console.error('Erreur création signed URL pour', filePath, ':', signError);
+            continue;
           }
           
+          const signedUrl = signedData?.signedUrl || '';
+
+          const card = document.createElement('div');
+          card.className = 'document-card';
           card.innerHTML = `
-            <div class="document-thumbnail">
-              ${thumbnailHTML}
-              <div class="document-extension">${extension}</div>
-            </div>
-            <div class="document-body">
-              <div class="document-info">
-                <div class="document-title">${escapeHtml(doc.title || 'Sans titre')}</div>
-                <div class="document-description">${escapeHtml(doc.description || 'Description du document')}</div>
+            <div class="document-header">
+              <div class="document-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
               </div>
-              <button class="btn-download" data-filepath="${escapeHtml(filePath)}" title="Télécharger">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-              </button>
+              <div class="document-info">
+                <div class="document-title">${escapeHtml(doc.title || doc.filename || 'Sans titre')}</div>
+                <div class="document-meta">${timeAgo(doc.created_at)}</div>
+              </div>
+            </div>
+            <div class="document-footer">
+              <span class="document-type">${getFileType(filePath)}</span>
+              <div class="document-actions">
+                <button class="action-btn btn-download" title="Télécharger" data-filepath="${escapeHtml(filePath)}">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                </button>
+              </div>
             </div>
           `;
           
           card.addEventListener('click', (e) => {
-            if (!e.target.closest('.btn-download')) {
-              window.location.href = `document-detail.html?id=${doc.id}`;
+            if (e.target.closest('.btn-download')) return;
+            if (signedUrl) {
+              window.open(signedUrl, '_blank');
             }
           });
 
@@ -337,277 +335,166 @@
           btn.addEventListener('click', async (e) => {
             e.stopPropagation();
             const filePath = btn.getAttribute('data-filepath');
-            await downloadDocument(filePath);
+            
+            if (!filePath) {
+              alert('Informations du document manquantes');
+              return;
+            }
+
+            try {
+              const { data: downloadData, error: downloadError } = await supabase.storage
+                .from('documents')
+                .createSignedUrl(filePath, 60);
+              
+              if (downloadError) {
+                console.error('Download error:', downloadError);
+                alert('Erreur lors de la génération du lien de téléchargement: ' + downloadError.message);
+                return;
+              }
+              
+              if (downloadData?.signedUrl) {
+                window.open(downloadData.signedUrl, '_blank');
+              } else {
+                alert('Impossible de générer le lien de téléchargement');
+              }
+            } catch (err) {
+              console.error('Unexpected download error:', err);
+              alert('Erreur lors du téléchargement du document');
+            }
           });
         });
-
       } catch (err) {
-        console.error('loadDocuments error', err);
-        container.innerHTML = '<div class="empty-state">Erreur de chargement</div>';
+        console.error('loadDocuments unexpected', err);
+        container.innerHTML = '<p class="empty-text">Erreur lors du chargement des documents.</p>';
       }
     }
 
-    async function downloadDocument(filePath) {
-      try {
-        const { data: signedData } = await supabase.storage
-          .from('documents')
-          .createSignedUrl(filePath, 60);
-        
-        if (signedData?.signedUrl) {
-          window.open(signedData.signedUrl, '_blank');
-        }
-      } catch (err) {
-        console.error('Download error', err);
-      }
-    }
-
-    // LOAD QUIZ
     async function loadQuizzes() {
-      const container = document.getElementById('quiz-grid');
-      container.innerHTML = '<div class="empty-state">Chargement...</div>';
+      const container = document.getElementById('quiz-list');
+      container.innerHTML = '<p class="empty-text">Chargement des quiz…</p>';
       
       try {
         const { data: quizzes, error } = await supabase
           .from('quizzes')
           .select('*')
-          .order('created_at', { ascending: false })
-          .limit(3);
+          .order('created_at', { ascending: false });
 
         if (error) throw error;
 
         if (!quizzes || quizzes.length === 0) {
-          container.innerHTML = '<div class="empty-state">Aucun quiz disponible</div>';
+          container.innerHTML = `<div class="empty-state"><div class="empty-icon">❓</div><div class="empty-title">Aucun quiz</div><div class="empty-text">Aucun quiz n'est disponible pour le moment.</div></div>`;
           return;
         }
 
         container.innerHTML = '';
         
-        quizzes.forEach(quiz => {
+        quizzes.forEach(q => {
           let questionsCount = 0;
           try {
-            const qs = typeof quiz.questions === 'string' ? JSON.parse(quiz.questions) : quiz.questions;
+            const qs = typeof q.questions === 'string' ? JSON.parse(q.questions) : q.questions;
             questionsCount = Array.isArray(qs) ? qs.length : 0;
-          } catch (e) { }
+          } catch (e) { questionsCount = 0; }
 
-          const bgColor = quiz.color || '#E5D4FF';
+          const estTime = Math.max(1, Math.round((questionsCount * 1))); 
 
-          const card = document.createElement('div');
-          card.className = 'quiz-card';
-          card.style.background = bgColor;
-          card.innerHTML = `
-            <div class="quiz-icon">?</div>
-            <div class="quiz-title">${escapeHtml(quiz.title || 'Nom du quiz')}</div>
-            <div class="quiz-questions">${questionsCount} question${questionsCount > 1 ? 's' : ''}</div>
-            <div class="quiz-arrow">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          const quizItem = document.createElement('div');
+          quizItem.className = 'quiz-item';
+          quizItem.innerHTML = `
+            <div class="quiz-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
             </div>
+            <div class="quiz-content">
+              <div class="quiz-title">${escapeHtml(q.title || 'Quiz')}</div>
+              <div class="quiz-description">${escapeHtml(q.description || '')}</div>
+              <div class="quiz-meta">
+                <span>${questionsCount} question${questionsCount>1?'s':''}</span>
+                <span>•</span>
+                <span>~${estTime} minutes</span>
+              </div>
+            </div>
+            <button class="btn-start-quiz" data-quiz-id="${q.id}">Démarrer en tant qu'hôte</button>
           `;
           
-          card.addEventListener('click', () => {
-            window.location.href = `quiz-detail.html?id=${quiz.id}`;
-          });
+          container.appendChild(quizItem);
+        });
 
-          container.appendChild(card);
+        document.querySelectorAll('.btn-start-quiz').forEach(btn => {
+          btn.addEventListener('click', async (e) => {
+            e.stopPropagation();
+            const quizId = btn.getAttribute('data-quiz-id');
+            await startQuizSession(quizId);
+          });
         });
 
       } catch (err) {
         console.error('loadQuizzes error', err);
-        container.innerHTML = '<div class="empty-state">Erreur de chargement</div>';
+        container.innerHTML = '<p class="empty-text">Erreur lors du chargement des quiz.</p>';
       }
     }
 
-    // LOAD FORMATIONS
-    async function loadFormations() {
-      const container = document.getElementById('formations-list');
-      container.innerHTML = '<div class="empty-state">Chargement...</div>';
-      
+    async function startQuizSession(quizId) {
       try {
-        const { data: formations, error } = await supabase
-          .from('formations')
-          .select('*')
-          .order('created_at', { ascending: false })
-          .limit(2);
+        const code = Math.floor(100000 + Math.random() * 900000).toString();
+
+        const { data, error } = await supabase
+          .from('live_sessions')
+          .insert([{
+            quiz_id: quizId,
+            host_user_id: currentUserId,
+            code: code,
+            status: 'waiting'
+          }])
+          .select()
+          .single();
 
         if (error) throw error;
 
-        if (!formations || formations.length === 0) {
-          container.innerHTML = '<div class="empty-state">Aucune formation disponible</div>';
-          return;
-        }
-
-        const { data: allCategories } = await supabase
-          .from('categories')
-          .select('*');
-
-        const categoriesMap = {};
-        if (allCategories) {
-          allCategories.forEach(cat => {
-            categoriesMap[cat.name] = cat.color;
-          });
-        }
-
-        container.innerHTML = '';
+        window.location.href = `host.html?session=${data.id}`;
         
-        formations.forEach(formation => {
-          const categories = Array.isArray(formation.categories) ? formation.categories : [];
-
-          const card = document.createElement('div');
-          card.className = 'formation-card';
-          
-          let categoriesHTML = '';
-          categories.forEach(cat => {
-            const color = categoriesMap[cat] || '#e5e5e5';
-            categoriesHTML += `<span class="formation-category" style="background: ${color}; color: ${getContrastColor(color)};">${escapeHtml(cat)}</span>`;
-          });
-
-          if (categoriesHTML === '') {
-            categoriesHTML = '<span class="formation-category" style="background: #81E6A1; color: #0d0d0d;">catégorie1</span><span class="formation-category" style="background: #FFAA85; color: #0d0d0d;">catégorie2</span>';
-          }
-
-          const duration = formation.duration_minutes ? `${formation.duration_minutes} minutes` : 'XX minutes';
-
-          card.innerHTML = `
-            <div class="formation-info">
-              <div class="formation-categories">${categoriesHTML}</div>
-              <div class="formation-title">${escapeHtml(formation.title || 'Nom de la formation')}</div>
-              <div class="formation-description">${escapeHtml(formation.description || 'Description de la formation')}</div>
-              <div class="formation-duration">${duration}</div>
-            </div>
-            <div class="formation-arrow">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-            </div>
-          `;
-          
-          card.addEventListener('click', () => {
-            window.location.href = `formation-detail.html?id=${formation.id}`;
-          });
-
-          container.appendChild(card);
-        });
-
       } catch (err) {
-        console.error('loadFormations error', err);
-        container.innerHTML = '<div class="empty-state">Erreur de chargement</div>';
+        console.error('Error starting session:', err);
+        alert('Erreur lors du démarrage de la session: ' + err.message);
       }
     }
 
-    // LOAD EVENTS
-    async function loadEvents() {
-      const container = document.getElementById('events-list');
-      container.innerHTML = '<div class="empty-state">Chargement...</div>';
-      
-      try {
-        const { data: events, error } = await supabase
-          .from('events')
-          .select('*')
-          .order('event_date', { ascending: true })
-          .order('start_time', { ascending: true })
-          .limit(10);
-
-        if (error) throw error;
-
-        if (!events || events.length === 0) {
-          container.innerHTML = '<div class="empty-state">Aucun événement à venir</div>';
-          return;
-        }
-
-        const groupedEvents = {};
-        events.forEach(event => {
-          const date = event.event_date;
-          if (!date) return;
-          
-          if (!groupedEvents[date]) {
-            groupedEvents[date] = [];
-          }
-          groupedEvents[date].push(event);
-        });
-
-        const sortedDates = Object.keys(groupedEvents).sort((a, b) => {
-          return new Date(a) - new Date(b);
-        });
-
-        container.innerHTML = '';
-        
-        sortedDates.forEach(date => {
-          const dateLabel = formatEventDate(date);
-          const dateGroup = document.createElement('div');
-          dateGroup.className = 'event-date-group';
-          dateGroup.innerHTML = `<div class="event-date-label">${dateLabel}</div>`;
-
-          groupedEvents[date].forEach(event => {
-            const bgColor = event.background_color || '#FBE01D';
-            const startTime = event.start_time ? event.start_time.substring(0, 5) : '14h';
-            const endTime = event.end_time ? event.end_time.substring(0, 5) : '16h';
-            const timeRange = `${startTime} - ${endTime}`;
-
-            const eventCard = document.createElement('div');
-            eventCard.className = 'event-card';
-            eventCard.style.background = bgColor;
-            eventCard.innerHTML = `
-              <div class="event-meta">
-                <div class="event-meta-item">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                  <span>${escapeHtml(event.location || 'Emplacement')}</span>
-                </div>
-                <span>•</span>
-                <div class="event-meta-item">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                  <span>${timeRange}</span>
-                </div>
-              </div>
-              <div class="event-title">${escapeHtml(event.title || 'Nom de l\'événement')}</div>
-              <div class="event-description">${escapeHtml(event.description || 'Description de l\'événement')}</div>
-            `;
-
-            eventCard.addEventListener('click', () => {
-              window.location.href = `event-detail.html?id=${event.id}`;
-            });
-
-            dateGroup.appendChild(eventCard);
-          });
-
-          container.appendChild(dateGroup);
-        });
-
-      } catch (err) {
-        console.error('loadEvents error', err);
-        container.innerHTML = '<div class="empty-state">Erreur de chargement</div>';
-      }
-    }
-
-    // UTILS
     function escapeHtml(unsafe) {
       if (!unsafe && unsafe !== 0) return '';
-      return String(unsafe).replace(/[&<>"'`=\/]/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','`':'&#x60;','/':'&#x2F;','=':'&#x3D;'})[s]);
+      return String(unsafe).replace(/[&<>"'`=\/]/g, function (s) {
+        return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','`':'&#x60;','/':'&#x2F;','=':'&#x3D;'})[s];
+      });
     }
 
-    function getFileExtension(filename) {
+    function getFileType(filename) {
       if (!filename) return '';
-      const parts = filename.split('.');
-      return parts.length > 1 ? parts.pop().toUpperCase() : '';
+      const ext = filename.split('.').pop().toLowerCase();
+      if (['pdf'].includes(ext)) return 'PDF';
+      if (['doc','docx'].includes(ext)) return 'DOCX';
+      if (['xls','xlsx','csv'].includes(ext)) return 'XLSX';
+      return ext.toUpperCase();
     }
 
-    function getContrastColor(hexColor) {
-      if (!hexColor) return '#0d0d0d';
-      const hex = hexColor.replace('#', '');
-      const r = parseInt(hex.substr(0, 2), 16);
-      const g = parseInt(hex.substr(2, 2), 16);
-      const b = parseInt(hex.substr(4, 2), 16);
-      const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-      return brightness > 155 ? '#0d0d0d' : '#ffffff';
-    }
+    document.getElementById('view-all-docs').addEventListener('click', (e) => {
+      e.preventDefault();
+      document.getElementById('document-grid').scrollIntoView({ behavior: 'smooth' });
+    });
 
-    function formatEventDate(dateString) {
-      if (!dateString || dateString === 'Date inconnue') return 'Date inconnue';
-      try {
-        const date = new Date(dateString);
-        const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
-        const formatted = date.toLocaleDateString('fr-FR', options);
-        return formatted.charAt(0).toUpperCase() + formatted.slice(1);
-      } catch (e) {
-        return dateString;
-      }
-    }
+    document.getElementById('view-all-quizzes').addEventListener('click', (e) => {
+      e.preventDefault();
+      document.getElementById('quiz-list').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    const navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        navItems.forEach(nav => nav.classList.remove('active'));
+        item.classList.add('active');
+        const page = item.dataset.page;
+        if (page === 'dashboard') window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (page === 'documents') document.getElementById('document-grid').scrollIntoView({ behavior: 'smooth' });
+        if (page === 'quiz') document.getElementById('quiz-list').scrollIntoView({ behavior: 'smooth' });
+      });
+    });
 
     checkAuthAndLoad();
   </script>
