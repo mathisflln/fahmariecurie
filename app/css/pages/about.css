@@ -1,0 +1,41 @@
+/* ============================================
+   ABOUT PAGE STYLES
+   ============================================ */
+
+.asso-section-hero {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  padding-top: 15rem;
+  justify-content: center;
+  background-image: url('../assets/images/asso-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.asso-hero-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  color: var(--color-dark);
+  max-width: 800px;
+  padding: 0 var(--spacing-lg);
+  color: var(--color-pure-white);
+}
+
+.asso-section-hero h1 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  letter-spacing: -0.03em;
+  font-weight: var(--font-weight-medium);
+  margin-bottom: var(--spacing-md);
+  line-height: 110%;
+}
+
+.asso-section-hero p {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-light);
+  margin-bottom: var(--spacing-xl);
+}
