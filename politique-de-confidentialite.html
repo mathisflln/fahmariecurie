@@ -21,49 +21,51 @@
 <body>
     <!-- NAVBAR -->
     <div class="topbar-wrapper">
-    <!-- Barre de navigation en forme de pill -->
-    <div class="navbar-pill">
-        <div class="navbar-inner">
-        <!-- Logo -->
-        <a href="./index.html" class="logo-container">
-            <img src="assets/logos/fah.png" alt="Logo" class="logo-svg">
-        </a>
+        <div class="navbar-pill">
+            <div class="navbar-inner">
+                <!-- Logo -->
+                <a href="./index.html" class="logo-container">
+                    <img src="assets/logos/fah.png" alt="Logo" class="logo-svg">
+                </a>
 
-        <!-- Navigation Desktop -->
-        <div class="nav-links-desktop">
-            <a href="./about.html" class="nav-link">L'association</a>
-            <a href="./actions.html" class="nav-link">Nos actions</a>
-            <a href="./comprendre.html" class="nav-link">Comprendre</a>
-            <a href="./agir.html" class="nav-link">Agir</a>
-            
-            <!-- Spacer pour pousser les boutons à droite -->
-            <div class="nav-spacer">
-            <a href="./login.html" class="nav-link">Se connecter</a>
-            <a href="https://www.helloasso.com/associations/association-anti-harcelement-de-la-cite-scolaire-marie-curie/formulaires/1" class="nav-link nav-link-cta">Faire un don</a>
+                <!-- Navigation Desktop -->
+                <div class="nav-links-desktop">
+                    <a href="./about.html" class="nav-link">L'association</a>
+                    <a href="./actions.html" class="nav-link">Nos actions</a>
+                    <a href="./comprendre.html" class="nav-link">Comprendre</a>
+                    <a href="./agir.html" class="nav-link">Agir</a>
+                    
+                    <div class="nav-spacer">
+                        <a href="./login.html" class="nav-link">Se connecter</a>
+                        <a href="https://www.helloasso.com/associations/association-anti-harcelement-de-la-cite-scolaire-marie-curie/formulaires/1" class="nav-link nav-link-cta">Faire un don</a>
+                    </div>
+                </div>
+
+                <!-- Burger Menu Button -->
+                <button class="burger-btn" onclick="toggleMobileMenu()">
+                    <div class="burger-icon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
             </div>
         </div>
-
-        <!-- Burger Menu Button -->
-        <button class="burger-btn" onclick="toggleMobileMenu()">
-            <div class="burger-icon">
-            <span></span>
-            <span></span>
-            <span></span>
-            </div>
-        </button>
-        </div>
-    </div>
     </div>
 
     <!-- Mobile Menu Overlay -->
     <div class="mobile-menu-overlay" id="mobileMenu">
-        <a href="./about.html" class="nav-link">L'association</a>
-        <a href="./actions.html" class="nav-link">Nos actions</a>
-        <a href="./comprendre.html" class="nav-link">Comprendre</a>
-        <a href="./agir.html" class="nav-link">Agir</a>
-
-        <a href="./login.html" class="nav-link">Se connecter</a>
-        <a href="https://www.helloasso.com/associations/association-anti-harcelement-de-la-cite-scolaire-marie-curie/formulaires/1" class="nav-link nav-link-cta">Faire un don</a>
+        <div>
+            <a href="./about.html" class="nav-link">L'association</a>
+            <a href="./actions.html" class="nav-link">Nos actions</a>
+            <a href="./comprendre.html" class="nav-link">Comprendre</a>
+            <a href="./agir.html" class="nav-link">Agir</a>
+        </div>
+        
+        <div class="mobile-menu-bottom">
+            <a href="./login.html" class="nav-link-login">Se connecter</a>
+            <a href="https://www.helloasso.com/associations/association-anti-harcelement-de-la-cite-scolaire-marie-curie/formulaires/1" class="nav-link-cta-mobile">Faire un don</a>
+        </div>
     </div>
 
     <section class="section-grey-bg">
@@ -325,6 +327,7 @@
     </div>
 
 
+    <!-- FOOTER -->
     <footer>
         <!-- Partie 1 : Section avec image de fond -->
         <section class="footer-cta">
@@ -358,6 +361,10 @@
                     <!-- Colonne 2 : Compagnie -->
                     <div class="footer-col">
                         <h3>Compagnie</h3>
+                        <label class="footer-col-header" for="toggle-compagnie">
+                            <h3>Compagnie</h3>
+                        </label>
+                        <input type="checkbox" id="toggle-compagnie" class="footer-col-toggle">
                         <ul>
                             <li><a href="./about.html">L'association</a></li>
                             <li><a href="./actions.html">Nos actions</a></li>
@@ -368,6 +375,10 @@
                     <!-- Colonne 3 : Liens utiles -->
                     <div class="footer-col">
                         <h3>Liens utiles</h3>
+                        <label class="footer-col-header" for="toggle-liens">
+                            <h3>Liens utiles</h3>
+                        </label>
+                        <input type="checkbox" id="toggle-liens" class="footer-col-toggle">
                         <ul>
                             <li><a href="./comprendre.html">Comprendre</a></li>
                             <li><a href="./agir.html">Agir</a></li>
@@ -380,6 +391,10 @@
                     <!-- Colonne 4 : Besoin d'infos -->
                     <div class="footer-col">
                         <h3>Besoin d'infos</h3>
+                        <label class="footer-col-header" for="toggle-infos">
+                            <h3>Besoin d'infos</h3>
+                        </label>
+                        <input type="checkbox" id="toggle-infos" class="footer-col-toggle">
                         <ul>
                             <li><a href="./contact.html">Contact</a></li>
                             <li><a href="./index.html">FAQ</a></li>
