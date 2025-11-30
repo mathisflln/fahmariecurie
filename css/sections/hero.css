@@ -195,7 +195,7 @@
 
 /* === RESPONSIVE === */
 
-@media (max-width: 1300px) {
+@media (max-width: 1600px) {
   .img1 { width: 280px; left: -9%; }
   .img2 { width: 120px; }
   .img3 { width: 270px; }
