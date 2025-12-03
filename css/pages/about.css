@@ -16,8 +16,8 @@
   justify-content: center;
   background-image: url('../../assets/images/asso-bg.jpg');
   background-size: cover;
-  background-position: center;
   background-repeat: no-repeat;
+  background-position: center;
 }
 
 .asso-hero-content {
@@ -84,4 +84,103 @@
   max-width: 800px;
   height: auto;
   filter: drop-shadow(8px 8px 10px #000000a0);
+}
+
+
+
+
+
+
+.valeurs-section {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;   
+  flex-direction: column;     
+  align-items: center;    
+  justify-content: center;
+  padding: 200px 20px;
+}
+
+.valeurs-section h2 {
+  text-align: center;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  color: var(--color-dark);
+  margin-bottom: var(--spacing-md);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-weight: var(--font-weight-medium);
+}
+
+.valeurs-section p {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-light);
+  color: #5E5E5E;
+  text-align: center;
+  max-width: 1000px;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 colonnes */
+  gap: 20px;
+  max-width: 1000px; /* limite la largeur totale */
+  margin: 60px auto;
+}
+
+.grid-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 20px;
+  border-radius: 20px;
+  background-color: #ffff8cb0;
+  flex-direction: row;
+}
+
+.icon-circle {
+  width: 40px;
+  height: 40px;
+  background-color: #ffff00; /* jaune */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0; /* ne rétrécit pas */
+  margin-right: 15px;
+}
+
+.icon-circle i {
+  color: black; /* couleur de la coche */
+  font-size: 1.2rem;
+}
+
+.text-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.text-block h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  color: black;
+}
+
+.text-block p {
+  margin: 5px 0 0 0;
+  font-size: 1rem;
+  color: black;
+  font-weight: 300;
+  text-align: left;
+}
+
+/* Responsive — 1 colonne sous 768px */
+@media (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: 1fr; /* 1 colonne */
+  }
+
+  .grid-item {
+    flex-direction: row; /* toujours icône à gauche */
+    justify-content: flex-start;
+  }
 }
