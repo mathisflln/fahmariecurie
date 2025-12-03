@@ -40,7 +40,7 @@
 
 .asso-section-hero p {
   font-size: var(--font-size-md);
-  font-weight: var(--font-weight-light);
+  font-weight: 200;
   margin-bottom: var(--spacing-xl);
 }
 
@@ -87,6 +87,22 @@
 }
 
 
+.equipe-section {
+  margin-top: 160px;
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  padding-top: 15rem;
+  padding-bottom: 15rem;
+  justify-content: center;
+  background-image: url('../../assets/images/grey-bg.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+
+
 
 
 
@@ -110,6 +126,7 @@
   line-height: 1;
   letter-spacing: -0.03em;
   font-weight: var(--font-weight-medium);
+  max-width: 1000px;
 }
 
 .valeurs-section p {
@@ -169,7 +186,7 @@
   margin: 5px 0 0 0;
   font-size: 1rem;
   color: black;
-  font-weight: 300;
+  font-weight: 200;
   text-align: left;
 }
 
