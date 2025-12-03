@@ -43,3 +43,45 @@
   font-weight: var(--font-weight-light);
   margin-bottom: var(--spacing-xl);
 }
+
+
+.ipad-section {
+  padding: var(--spacing-6xl) var(--spacing-lg) 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.ipad-content {
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.ipad-content h2 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  color: var(--color-dark);
+  margin-bottom: var(--spacing-md);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-weight: var(--font-weight-medium);
+}
+
+.ipad-content p {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-light);
+  color: #5E5E5E;
+  margin-top: 5rem;
+  max-width: 500px;
+}
+
+.ipad-content img {
+  rotate: -2deg;
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+  filter: drop-shadow(8px 8px 10px #000000a0);
+}
