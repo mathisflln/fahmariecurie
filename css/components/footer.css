@@ -130,7 +130,7 @@ footer {
 
 .footer-col ul {
   list-style: none;
-  font-weight: var(--font-weight-light);
+  font-weight: 200;
 }
 
 .footer-col ul li {
@@ -177,11 +177,13 @@ footer {
   text-decoration: underline;
   font-size: var(--font-size-sm);
   transition: color var(--transition-base);
+  font-weight: 200;
 }
 
 .copyright p {
   color: rgba(255, 255, 255, 1);
   font-size: var(--font-size-sm);
+  font-weight: 200;
 }
 
 /* === TOGGLE MOBILE === */
