@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carousel Membres</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f9f9f9;
+    margin: 0;
+  }
+
+  .carousel-container {
+    display: flex;
+    align-items: flex-start;
+    overflow: hidden; /* cache tout débordement */
+  }
+
+  /* Card fixe */
+  .card-fixed {
+    flex: 0 0 250px;
+    background: #4a90e2;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    height: 350px;
+    margin-right: 20px; /* espace entre fixe et carousel */
+    box-sizing: border-box;
+  }
+
+  .card-fixed h2 {
+    margin-top: 0;
+  }
+
+  /* Carousel scrollable */
+  .carousel {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    height: 350px;
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .carousel::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Edge */
+  }
+
+  /* Cards membres */
+  .member-card {
+    flex: 0 0 250px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    text-align: center;
+    padding: 15px;
+    box-sizing: border-box;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-right: 20px; /* espace entre cards sauf la dernière */
+  }
+
+  /* Supprimer la marge droite de la dernière card */
+  .carousel .member-card:last-child {
+    margin-right: 0;
+  }
+
+  .member-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+  .member-card h3 {
+    margin: 10px 0 5px;
+    font-size: 18px;
+  }
+
+  .member-card p.role {
+    font-weight: bold;
+    color: #555;
+    margin: 0;
+  }
+
+  .member-card p.desc {
+    font-size: 14px;
+    color: #777;
+  }
+</style>
+</head>
+<body>
+
+<div class="carousel-container">
+  <!-- Card fixe -->
+  <div class="card-fixed">
+    <h2>Notre équipe</h2>
+    <p>Découvrez tous les membres de l'association</p>
+  </div>
+
+  <!-- Carousel -->
+  <div class="carousel">
+    <div class="member-card">
+      <img src="https://via.placeholder.com/250x150" alt="Membre 1">
+      <h3>Jean Dupont</h3>
+      <p class="role">Président</p>
+      <p class="desc">Jean est passionné par la culture et la solidarité.</p>
+    </div>
+    <div class="member-card">
+      <img src="https://via.placeholder.com/250x150" alt="Membre 2">
+      <h3>Marie Curie</h3>
+      <p class="role">Trésorière</p>
+      <p class="desc">Marie gère les finances de l'association avec soin.</p>
+    </div>
+    <div class="member-card">
+      <img src="https://via.placeholder.com/250x150" alt="Membre 3">
+      <h3>Paul Martin</h3>
+      <p class="role">Secrétaire</p>
+      <p class="desc">Paul coordonne toutes les réunions et projets.</p>
+    </div>
+    <div class="member-card">
+      <img src="https://via.placeholder.com/250x150" alt="Membre 4">
+      <h3>Lucie Bernard</h3>
+      <p class="role">Membre actif</p>
+      <p class="desc">Lucie participe à toutes les initiatives de terrain.</p>
+    </div>
+        <div class="member-card">
+      <img src="https://via.placeholder.com/250x150" alt="Membre 4">
+      <h3>Lucie Bernard</h3>
+      <p class="role">Membre actif</p>
+      <p class="desc">Lucie participe à toutes les initiatives de terrain.</p>
+    </div>
+        <div class="member-card">
+      <img src="https://via.placeholder.com/250x150" alt="Membre 4">
+      <h3>Lucie Bernard</h3>
+      <p class="role">Membre actif</p>
+      <p class="desc">Lucie participe à toutes les initiatives de terrain.</p>
+    </div>
+        <div class="member-card">
+      <img src="https://via.placeholder.com/250x150" alt="Membre 4">
+      <h3>Lucie Bernard</h3>
+      <p class="role">Membre actif</p>
+      <p class="desc">Lucie participe à toutes les initiatives de terrain.</p>
+    </div>
+        <div class="member-card">
+      <img src="https://via.placeholder.com/250x150" alt="Membre 4">
+      <h3>Lucie Bernard</h3>
+      <p class="role">Membre actif</p>
+      <p class="desc">Lucie participe à toutes les initiatives de terrain.</p>
+    </div>
+    <div class="member-card">
+      <img src="https://via.placeholder.com/250x150" alt="Membre 4">
+      <h3>Lucie Bernard</h3>
+      <p class="role">Membre actif</p>
+      <p class="desc">Lucie participe à toutes les initiatives de terrain.</p>
+    </div>
+        <div class="member-card">
+      <img src="https://via.placeholder.com/250x150" alt="Membre 4">
+      <h3>Lucie Bernard</h3>
+      <p class="role">Membre actif</p>
+      <p class="desc">Lucie participe à toutes les initiatives de terrain.</p>
+    </div>
+        <div class="member-card">
+      <img src="https://via.placeholder.com/250x150" alt="Membre 4">
+      <h3>Lucie Bernard</h3>
+      <p class="role">Membre actif</p>
+      <p class="desc">Lucie participe à toutes les initiatives de terrain.</p>
+    </div>
+        <div class="member-card">
+      <img src="https://via.placeholder.com/250x150" alt="Membre 4">
+      <h3>Lucie Bernard</h3>
+      <p class="role">Membre actif</p>
+      <p class="desc">Lucie participe à toutes les initiatives de terrain.</p>
+    </div>
+        <div class="member-card">
+      <img src="https://via.placeholder.com/250x150" alt="Membre 4">
+      <h3>Lucie Bernard</h3>
+      <p class="role">Membre actif</p>
+      <p class="desc">Lucie participe à toutes les initiatives de terrain.</p>
+    </div>
+        <div class="member-card">
+      <img src="https://via.placeholder.com/250x150" alt="Membre 4">
+      <h3>Lucie Bernard</h3>
+      <p class="role">Membre actif</p>
+      <p class="desc">Lucie participe à toutes les initiatives de terrain.</p>
+    </div>
+        <div class="member-card">
+      <img src="https://via.placeholder.com/250x150" alt="Membre 4">
+      <h3>Lucie Bernard</h3>
+      <p class="role">Membre actif</p>
+      <p class="desc">Lucie participe à toutes les initiatives de terrain.</p>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

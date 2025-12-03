@@ -87,6 +87,9 @@
 }
 
 
+
+
+
 .equipe-section {
   margin-top: 160px;
   position: relative;
@@ -101,9 +104,221 @@
   background-position: center;
 }
 
+.carousel-container {
+  padding-left: clamp(20px, 15vw, 250px);
+  display: flex;
+  align-items: flex-start;
+  overflow: hidden; /* cache tout débordement */
+}
 
+/* Card fixe */
+.card-fixed {
+  flex: 0 0 300px;
+  background: #000000;
+  color: rgb(255, 255, 255);
+  padding: 30px;
+  border-radius: 20px;
+  height: 450px;
+  margin-right: 20px;
+  box-sizing: border-box;
+}
 
+.card-fixed h2 {
+  font-size: 3rem;
+  font-weight: 400;
+  line-height: 1em;
+}
 
+.card-fixed p {
+  font-size: 1rem;
+  font-weight: 200;
+  padding-top: 30px;
+}
+
+/* Carousel scrollable */
+.carousel {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  height: 450px;
+  scrollbar-width: none; /* Firefox */
+}
+
+.carousel::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}
+
+/* Cards membres */
+.member-card {
+  flex: 0 0 350px;
+  background: #FFFF10;
+  border-radius: 20px;
+  padding: 30px;
+  box-sizing: border-box;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  margin-right: 20px; /* espace entre cards sauf la dernière */
+}
+
+/* Supprimer la marge droite de la dernière card */
+.carousel .member-card:last-child {
+  margin-right: 0;
+}
+
+.member-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.member-card h3 {
+  margin: 10px 0 0;
+  font-size: 2rem;
+}
+
+.member-card p.role {
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+.member-card p.desc {
+  margin-top: 15px;
+  font-size: 14px;
+  font-weight: 300;
+}
+
+/* RESPONSIVE */
+
+/* Tablettes (< 1024px) */
+@media (max-width: 1024px) {
+  .equipe-section {
+    padding-top: 10rem;
+    padding-bottom: 10rem;
+    margin-top: 100px;
+  }
+
+  .carousel-container {
+    padding-left: 3%;
+    padding-right: 3%;
+  }
+
+  .card-fixed {
+    flex: 0 0 250px;
+    padding: 25px;
+    height: 400px;
+  }
+
+  .card-fixed h2 {
+    font-size: 2.5rem;
+  }
+
+  .carousel {
+    height: 400px;
+  }
+
+  .member-card {
+    flex: 0 0 300px;
+    padding: 25px;
+  }
+
+  .member-card h3 {
+    font-size: 1.8rem;
+  }
+}
+
+/* Mobile (< 768px) */
+@media (max-width: 768px) {
+  .equipe-section {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    margin-top: 60px;
+  }
+
+  .carousel-container {
+    flex-direction: column;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .card-fixed {
+    flex: 1 1 auto;
+    width: 100%;
+    height: auto;
+    margin-right: 0;
+    margin-bottom: 30px;
+    padding: 25px;
+  }
+
+  .card-fixed h2 {
+    font-size: 2rem;
+  }
+
+  .card-fixed p {
+    font-size: 0.95rem;
+    padding-top: 20px;
+  }
+
+  .carousel {
+    width: 100%;
+    height: auto;
+    min-height: 400px;
+  }
+
+  .member-card {
+    flex: 0 0 280px;
+    padding: 20px;
+    margin-right: 15px;
+  }
+
+  .member-card h3 {
+    font-size: 1.6rem;
+  }
+
+  .member-card p.role {
+    font-size: 1.1rem;
+  }
+
+  .member-card p.desc {
+    font-size: 13px;
+  }
+}
+
+/* Petit mobile (< 480px) */
+@media (max-width: 480px) {
+  .equipe-section {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  .carousel-container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .card-fixed {
+    padding: 20px;
+  }
+
+  .card-fixed h2 {
+    font-size: 1.8rem;
+  }
+
+  .member-card {
+    flex: 0 0 250px;
+    padding: 20px;
+  }
+
+  .member-card img {
+    height: 130px;
+  }
+
+  .member-card h3 {
+    font-size: 1.5rem;
+  }
+}
 
 
 
