@@ -6,11 +6,11 @@
   <title>Tableau de bord - FAH Marie-Curie</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Stack+Sans+Headline:wght@200..700&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: "Host Grotesk", sans-serif; background: #f8f9fa; min-height: 100vh; }
+    body { font-family: "Stack Sans Headline", sans-serif; background: #f8f9fa; min-height: 100vh; }
     .sidebar { position: fixed; left: 0; top: 0; bottom: 0; width: 280px; background: #ffffff; border-right: 1px solid #e5e5e5; display: flex; flex-direction: column; z-index: 100; }
     .sidebar-header { padding: 24px; border-bottom: 1px solid #e5e5e5; }
     .sidebar-logo { display: flex; align-items: center; text-decoration: none; }
@@ -24,11 +24,11 @@
     .nav-item svg { width: 20px; height: 20px; flex-shrink: 0; }
     .sidebar-footer { padding: 16px; border-top: 1px solid #e5e5e5; }
     .user-info { display: flex; align-items: center; gap: 12px; padding: 8px 12px; margin-bottom: 8px; }
-    .user-avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #FBE01D 0%, #fff4a4 100%); display: flex; align-items: center; justify-content: center; font-weight: 600; color: #0d0d0d; font-size: 0.9rem; }
+    .user-avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #FFFF10 0%, #fff4a4 100%); display: flex; align-items: center; justify-content: center; font-weight: 600; color: #0d0d0d; font-size: 0.9rem; }
     .user-details { flex: 1; min-width: 0; }
     .user-name { font-size: 0.9rem; font-weight: 500; color: #0d0d0d; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .user-role { font-size: 0.75rem; color: #999; }
-    .btn-logout { width: 100%; padding: 10px 12px; background: transparent; border: 1px solid #e5e5e5; border-radius: 8px; color: #666; font-family: "Host Grotesk", sans-serif; font-size: 0.9rem; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .btn-logout { width: 100%; padding: 10px 12px; background: transparent; border: 1px solid #e5e5e5; border-radius: 8px; color: #666; font-family: "Stack Sans Headline", sans-serif; font-size: 0.9rem; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 8px; }
     .btn-logout:hover { background: #fee; border-color: #fcc; color: #c33; }
     .btn-logout svg { width: 16px; height: 16px; }
     .main-content { margin-left: 280px; padding: 32px; min-height: 100vh; }
@@ -39,7 +39,7 @@
     .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 32px; }
     .stat-card { background: #ffffff; border-radius: 12px; padding: 24px; border: 1px solid #e5e5e5; transition: all 0.2s ease; }
     .stat-card:hover { border-color: #FBE01D; box-shadow: 0 4px 12px rgba(251, 224, 29, 0.15); }
-    .stat-icon { width: 40px; height: 40px; border-radius: 10px; background: linear-gradient(135deg, #FBE01D 0%, #fff4a4 100%); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+    .stat-icon { width: 40px; height: 40px; border-radius: 10px; background: linear-gradient(135deg, #FFFF10 0%, #fff4a4 100%); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
     .stat-icon svg { width: 20px; height: 20px; color: #0d0d0d; }
     .stat-value { font-size: 1.75rem; font-weight: 600; color: #0d0d0d; margin-bottom: 4px; }
     .stat-label { font-size: 0.875rem; color: #666; }
@@ -66,7 +66,7 @@
     .quiz-list { display: flex; flex-direction: column; gap: 12px; }
     .quiz-item { display: flex; align-items: center; gap: 16px; padding: 16px; background: #f8f9fa; border-radius: 10px; cursor: pointer; transition: all 0.2s ease; border: 1px solid transparent; }
     .quiz-item:hover { background: #ffffff; border-color: #e5e5e5; transform: translateX(4px); }
-    .quiz-icon { width: 48px; height: 48px; border-radius: 10px; background: linear-gradient(135deg, #FBE01D 0%, #fff4a4 100%); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .quiz-icon { width: 48px; height: 48px; border-radius: 10px; background: linear-gradient(135deg, #FFFF10 0%, #fff4a4 100%); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .quiz-icon svg { width: 24px; height: 24px; color: #0d0d0d; }
     .quiz-content { flex: 1; min-width: 0; }
     .quiz-title { font-size: 1rem; font-weight: 500; color: #0d0d0d; margin-bottom: 4px; }

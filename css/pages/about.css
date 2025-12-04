@@ -91,13 +91,13 @@
 
 
 .equipe-section {
-  margin-top: 160px;
+  margin-top: 100px;
   position: relative;
   width: 100%;
   display: flex;
   align-items: flex-start;
-  padding-top: 15rem;
-  padding-bottom: 15rem;
+  padding-top: 6rem;
+  padding-bottom: 6rem;
   justify-content: center;
   background-image: url('../../assets/images/grey-bg.jpg');
   background-repeat: no-repeat;
@@ -154,7 +154,7 @@
   flex: 0 0 350px;
   background: #FFFF10;
   border-radius: 20px;
-  padding: 30px;
+  padding: 10px;
   box-sizing: border-box;
   scroll-snap-align: start;
   display: flex;
@@ -169,25 +169,28 @@
 
 .member-card img {
   width: 100%;
-  height: 150px;
+  height: 210px;
   object-fit: cover;
-  border-radius: 10px;
+  border-radius: 15px;
 }
 
 .member-card h3 {
   margin: 10px 0 0;
   font-size: 2rem;
+  padding: 20px 20px 0;
 }
 
 .member-card p.role {
   font-size: 1.2rem;
   font-weight: 400;
+  padding: 0 20px;
 }
 
 .member-card p.desc {
   margin-top: 15px;
   font-size: 14px;
   font-weight: 300;
+  padding: 0 20px;
 }
 
 /* RESPONSIVE */
