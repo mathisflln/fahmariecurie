@@ -99,7 +99,7 @@
 .action-content p {
     font-size: var(--font-size-md);
     font-weight: var(--font-weight-light);
-    line-height: 1.7;
+    line-height: 1.5;
     color: var(--color-text-secondary);
     margin-bottom: var(--spacing-md);
 }
@@ -124,6 +124,10 @@
 
     .action-content {
         padding: 0;
+    }
+
+    .action-content p { 
+        font-size: 1rem;
     }
 
     .action-content h2 {
