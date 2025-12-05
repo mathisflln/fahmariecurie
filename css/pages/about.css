@@ -418,4 +418,9 @@
     flex-direction: row; /* toujours icône à gauche */
     justify-content: flex-start;
   }
+
+  .valeurs-section p,
+  .text-block p {
+    font-size: var(--font-size-base);
+  }
 }
