@@ -332,3 +332,46 @@
   .img5 { width: 140px; }
   .img6 { width: 130px; }
 }
+
+
+
+
+
+
+
+
+/* HERO 2 */
+
+.hero-actions {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0 0 var(--border-radius-xl) var(--border-radius-xl);
+    background-image: url('../../assets/images/don-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    padding: var(--spacing-4xl) var(--spacing-lg);
+    text-align: center;
+    padding-top: 220px;
+    padding-bottom: 200px;
+}
+
+.hero-actions h1 {
+    text-align: center;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    color: var(--color-black);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    font-weight: var(--font-weight-medium);
+    max-width: 1200px;
+}
+
+.bulle {
+    margin-bottom: 20px;
+    background: white;
+    padding: 5px 12px;
+    border-radius: 40px;
+}
