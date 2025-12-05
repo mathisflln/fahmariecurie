@@ -63,13 +63,34 @@
     margin-bottom: var(--spacing-md);
 }
 
+.bubble {
+    background-color: #F1F3F6;
+    border-radius: 15px;
+    padding: 15px 20px 1px 50px;
+    position: relative;
+}
+
+.bubble::before {
+    content: "\f061";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    position: absolute;
+    left: 18px;
+    top: 18px;
+    font-size: 20px;
+}
+
+.bubble p {
+    font-weight: 400;
+}
+
 /* Alternance : image à droite pour les actions impaires */
 .action-item:nth-child(odd) {
     flex-direction: row-reverse;
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
     .action-item {
         flex-direction: column !important;
         gap: var(--spacing-xl);
