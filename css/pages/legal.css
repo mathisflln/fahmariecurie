@@ -54,3 +54,11 @@
 .legal a:hover {
   color: var(--color-black);
 }
+
+@media (max-width: 576px) {
+  .legal p,
+  .legal ul, 
+  .legal a {
+    font-size: var(--font-size-base);
+  }
+}
