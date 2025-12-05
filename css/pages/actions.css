@@ -3,46 +3,6 @@
    ============================================ */
 
 
-
-/* HERO */
-
-.hero-actions {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    border-radius: 0 0 var(--border-radius-xl) var(--border-radius-xl);
-    background-image: url('../../assets/images/don-bg.jpg');
-    background-size: cover;
-    background-position: center;
-    padding: var(--spacing-4xl) var(--spacing-lg);
-    text-align: center;
-    padding-top: 220px;
-    padding-bottom: 200px;
-}
-
-.hero-actions h1 {
-    text-align: center;
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    color: var(--color-black);
-    line-height: 1;
-    letter-spacing: -0.03em;
-    font-weight: var(--font-weight-medium);
-    max-width: 1200px;
-}
-
-.bulle {
-    margin-bottom: 20px;
-    background: white;
-    padding: 5px 12px;
-    border-radius: 40px;
-}
-
-
-
-
 /* Section des actions alternées */
 .actions-alternees {
     width: 100%;
@@ -67,19 +27,18 @@
 /* Image de l'action */
 .action-image {
     flex: 1;
-    border-radius: var(--border-radius-lg);
-    overflow: hidden;
-    position: relative; /* Ajouté */
+    display: flex; /* Ajouté pour centrer l'image */
+    justify-content: center; /* Centre horizontalement */
+    align-items: center; /* Centre verticalement */
 }
 
 .action-image img {
-    position: absolute; /* Ajouté */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
+    max-width: 100%; /* L'image ne dépasse pas son conteneur */
+    max-height: 500px; /* Hauteur max pour garder une taille raisonnable */
+    width: auto; /* Garde le ratio */
+    height: auto; /* Garde le ratio */
+    object-fit: contain; /* Garde l'image entière */
+    border-radius: var(--border-radius-lg);
 }
 
 /* Contenu texte de l'action */
