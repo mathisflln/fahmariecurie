@@ -76,12 +76,13 @@
     font-weight: 900;
     position: absolute;
     left: 18px;
-    top: 18px;
+    top: 16px;
     font-size: 20px;
 }
 
 .bubble p {
     font-weight: 400;
+    font-size: 1rem;
 }
 
 /* Alternance : image à droite pour les actions impaires */

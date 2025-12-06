@@ -44,6 +44,19 @@
   margin-bottom: var(--spacing-xl);
 }
 
+@media (max-width: 666px) {
+  .asso-section-hero {
+    padding-top: 10rem;
+  }
+
+  .asso-section-hero p {
+    font-size: var(--font-size-base);
+  }
+}
+
+
+
+
 
 .ipad-section {
   padding: var(--spacing-6xl) var(--spacing-lg) 0;
