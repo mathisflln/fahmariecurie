@@ -1,0 +1,88 @@
+/* ============================================
+   COMPRENDRE PAGE STYLES
+   ============================================ */
+
+
+
+.intro-comprendre {
+    align-items: center;
+    text-align: center;
+    margin: 100px auto;
+    max-width: 800px;
+    padding: 0 20px;
+}
+
+.intro-comprendre h2 {
+    font-size: clamp(2rem, 3vw, 3rem);
+    padding-bottom: 40px;
+}
+
+.intro-comprendre p {
+    font-size: var(--font-size-md);
+    font-weight: 200;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+@media (max-width: 1000px) {
+    .intro-comprendre p {
+        font-size: var(--font-size-base);
+    }
+}
+
+
+.text-over {
+    display: flex;
+    align-items: flex-start;
+    margin-top: 40px;
+    padding: 20px 25px;
+    border-radius: 20px;
+    background-color: #ffff8cb0;
+}
+
+.text-block {
+    display: flex;
+    flex-direction: column;
+}
+
+.text-block h3 {
+    margin: 0;
+    font-size: 1.3rem;
+    color: black;
+}
+
+.text-block p {
+    margin: 5px 0 0 0;
+    font-size: 1rem;
+    color: black;
+    font-weight: 300;
+    text-align: left;
+}
+
+.text-block ul {
+    padding-top: 14px;
+    list-style: none;
+    padding-left: 0;
+}
+
+.text-block li {
+    text-align: left;
+    margin-bottom: 15px;  /* Pour l'espace entre les items */
+    padding-left: 50px;  /* Espace pour l'icône */
+    position: relative;  /* Important pour positionner le ::before */
+}
+
+.text-block li::before {
+    content: "\f061";
+    font-family: "Font Awesome 6 Free";
+    padding: 8px;
+    margin-right: 10px;
+    background-color: #FFFF10;
+    border-radius: 20px;
+    font-weight: 900;
+    color: black;
+    position: absolute;  /* Position absolue pour le fixer */
+    left: 0;
+    top: -4px;
+}
