@@ -31,7 +31,7 @@
 }
 
 .asso-section-hero h1 {
-  font-size: clamp(3.2rem, 5vw, 4rem);
+  font-size: clamp(3rem, 5vw, 4rem);
   letter-spacing: -0.03em;
   font-weight: var(--font-weight-medium);
   margin-bottom: var(--spacing-md);
@@ -47,6 +47,17 @@
 @media (max-width: 666px) {
   .asso-section-hero {
     padding-top: 10rem;
+  }
+
+  .asso-section-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .15); /* noir à 50% d'opacité */
+    z-index: 1;
   }
 
   .asso-section-hero p {
