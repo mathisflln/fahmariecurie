@@ -22,7 +22,7 @@ body {
   width: 100%;
   max-width: 100vw;
   position: relative;
-  color: var(--color-dark);
+  color: black;
 }
 
 /* Typographie de base */
