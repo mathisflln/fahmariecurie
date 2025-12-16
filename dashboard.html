@@ -327,7 +327,7 @@
   <script>
     const SUPABASE_URL = "https://ckfdysasgawyixbxjyfz.supabase.co";
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNrZmR5c2FzZ2F3eWl4YnhqeWZ6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE5ODg1NjcsImV4cCI6MjA3NzU2NDU2N30.t0ubaRk5sz7kewyEsOg4CpFvj47S9U1J1SP_3DQBmE8";
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     let currentUserId = null;
     let selectedQuizId = null;
@@ -357,7 +357,7 @@
     // === AUTH ===
     async function checkAuthAndLoad() {
       try {
-        const { data } = await supabase.auth.getUser();
+        const { data } = await supabaseClient.auth.getUser();
         if (!data.user) {
           window.location.href = "login.html";
           return;
@@ -385,18 +385,18 @@
     }
 
     document.getElementById('logout').addEventListener('click', async () => {
-      await supabase.auth.signOut();
+      await supabaseClient.auth.signOut();
       window.location.href = "login.html";
     });
 
     // === STATS ===
     async function loadStats() {
-      const { count: docsCount } = await supabase
+      const { count: docsCount } = await supabaseClient
         .from('documents_meta')
         .select('id', { count: 'exact', head: true });
       document.getElementById('stat-docs').textContent = docsCount ?? '0';
 
-      const { count: qCount } = await supabase
+      const { count: qCount } = await supabaseClient
         .from('quizzes')
         .select('id', { count: 'exact', head: true });
       document.getElementById('stat-quizzes').textContent = qCount ?? '0';
@@ -439,7 +439,7 @@
         let filePath = doc.storage_path || doc.filepath || doc.filename || doc.file_path;
         if (!filePath) continue;
 
-        const { data: signedData } = await supabase.storage
+        const { data: signedData } = await supabaseClient.storage
           .from('documents')
           .createSignedUrl(filePath, 3600);
         
@@ -479,7 +479,7 @@
         btn.addEventListener('click', async (e) => {
           e.stopPropagation();
           const filePath = btn.getAttribute('data-filepath');
-          const { data } = await supabase.storage
+          const { data } = await supabaseClient.storage
             .from('documents')
             .createSignedUrl(filePath, 60);
           if (data?.signedUrl) window.open(data.signedUrl, '_blank');
@@ -488,7 +488,7 @@
     }
 
     async function loadDashboardDocuments() {
-      const { data: docs } = await supabase
+      const { data: docs } = await supabaseClient
         .from('documents_meta')
         .select('*')
         .order('created_at', { ascending: false })
@@ -498,7 +498,7 @@
     }
 
     async function loadAllDocuments() {
-      const { data: docs } = await supabase
+      const { data: docs } = await supabaseClient
         .from('documents_meta')
         .select('*')
         .order('created_at', { ascending: false });
@@ -543,7 +543,7 @@
     }
 
     async function loadDashboardQuiz() {
-      const { data: quizzes } = await supabase
+      const { data: quizzes } = await supabaseClient
         .from('quizzes')
         .select('*')
         .order('created_at', { ascending: false })
@@ -553,7 +553,7 @@
     }
 
     async function loadAllQuiz() {
-      const { data: quizzes } = await supabase
+      const { data: quizzes } = await supabaseClient
         .from('quizzes')
         .select('*')
         .order('created_at', { ascending: false });
@@ -592,7 +592,7 @@
       if (!selectedQuizId) return;
       
       const code = Math.floor(100000 + Math.random() * 900000).toString();
-      const { data } = await supabase
+      const { data } = await supabaseClient
         .from('live_sessions')
         .insert([{
           quiz_id: selectedQuizId,
@@ -613,7 +613,7 @@
 
     // === ÉVÉNEMENTS ===
     async function loadEvents() {
-      const { data: events, error } = await supabase
+      const { data: events, error } = await supabaseClient
         .from('events')
         .select('*')
         .order('event_date', { ascending: true });

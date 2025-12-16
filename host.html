@@ -529,7 +529,7 @@
   <script>
     const SUPABASE_URL = "https://ckfdysasgawyixbxjyfz.supabase.co";
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNrZmR5c2FzZ2F3eWl4YnhqeWZ6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE5ODg1NjcsImV4cCI6MjA3NzU2NDU2N30.t0ubaRk5sz7kewyEsOg4CpFvj47S9U1J1SP_3DQBmE8";
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     let sessionId = null;
     let quizData = null;
@@ -556,7 +556,7 @@
 
     async function loadSession() {
       try {
-        const { data: session, error: sessionError } = await supabase
+        const { data: session, error: sessionError } = await supabaseClient
           .from('live_sessions')
           .select('*, quizzes(*)')
           .eq('id', sessionId)
@@ -584,7 +584,7 @@
     }
 
     function subscribeToParticipants() {
-      supabase
+      supabaseClient
         .channel('participants')
         .on('postgres_changes', {
           event: '*',
@@ -600,7 +600,7 @@
     }
 
     async function loadParticipants() {
-      const { data, error } = await supabase
+      const { data, error } = await supabaseClient
         .from('session_participants')
         .select('*')
         .eq('session_id', sessionId)
@@ -632,7 +632,7 @@
     document.getElementById('start-btn').addEventListener('click', startQuiz);
 
     async function startQuiz() {
-      await supabase
+      await supabaseClient
         .from('live_sessions')
         .update({ status: 'active', current_question_index: 0 })
         .eq('id', sessionId);
@@ -671,7 +671,7 @@
     
       questionStartTime = Date.now();
       
-      await supabase
+      await supabaseClient
         .from('live_sessions')
         .update({ 
           current_question_index: index,
@@ -708,7 +708,7 @@
     }
 
     function subscribeToAnswers() {
-      supabase
+      supabaseClient
         .channel('answers')
         .on('postgres_changes', {
           event: 'INSERT',
@@ -724,11 +724,11 @@
     function subscribeToCurrentQuestionAnswers() {
       // Se désabonner du canal précédent s'il existe
       if (answersChannel) {
-        supabase.removeChannel(answersChannel);
+        supabaseClient.removeChannel(answersChannel);
       }
     
       // Créer un nouveau canal pour cette question
-      answersChannel = supabase
+      answersChannel = supabaseClient
         .channel(`answers-q${currentQuestionIndex}`)
         .on('postgres_changes', {
           event: 'INSERT',
@@ -748,7 +748,7 @@
     }
     
     async function updateResponseCounter() {
-      const { data: answers, error } = await supabase
+      const { data: answers, error } = await supabaseClient
         .from('participant_answers')
         .select('id')
         .eq('session_id', sessionId)
@@ -764,7 +764,7 @@
 
       // Se désabonner du canal des réponses
       if (answersChannel) {
-        supabase.removeChannel(answersChannel);
+        supabaseClient.removeChannel(answersChannel);
       }
     
       // Cacher le compteur de réponses
@@ -783,7 +783,7 @@
       questionText.textContent = question.question;
       
       // Get all answers for this question
-      const { data: answers } = await supabase
+      const { data: answers } = await supabaseClient
         .from('participant_answers')
         .select('*')
         .eq('session_id', sessionId)
@@ -828,7 +828,7 @@
       const maxTime = (question.timeLimit || 30) * 1000; // en millisecondes
     
       // IMPORTANT: Sélectionner TOUTES les colonnes, y compris created_at
-      const { data: answers, error: answersError } = await supabase
+      const { data: answers, error: answersError } = await supabaseClient
         .from('participant_answers')
         .select('*')
         .eq('session_id', sessionId)
@@ -849,7 +849,7 @@
       console.log('First answer keys:', Object.keys(answers[0]));
     
       // Récupérer le temps de début de la question depuis la session
-      const { data: session } = await supabase
+      const { data: session } = await supabaseClient
         .from('live_sessions')
         .select('question_start_time')
         .eq('id', sessionId)
@@ -906,7 +906,7 @@
           console.log('===================');
     
           // Récupérer le score actuel du participant
-          const { data: participant } = await supabase
+          const { data: participant } = await supabaseClient
             .from('session_participants')
             .select('score')
             .eq('id', answer.participant_id)
@@ -915,13 +915,13 @@
           // Mettre à jour avec le score cumulé
           const newScore = (participant?.score || 0) + points;
           
-          await supabase
+          await supabaseClient
             .from('session_participants')
             .update({ score: newScore })
             .eq('id', answer.participant_id);
     
           // Mettre à jour la réponse avec les informations
-          await supabase
+          await supabaseClient
             .from('participant_answers')
             .update({ 
               is_correct: true, 
@@ -930,7 +930,7 @@
             .eq('id', answer.id);
         } else {
           // Mauvaise réponse
-          await supabase
+          await supabaseClient
             .from('participant_answers')
             .update({ 
               is_correct: false, 
@@ -944,7 +944,7 @@
     }
 
     async function showLeaderboard() {
-      const { data: topParticipants } = await supabase
+      const { data: topParticipants } = await supabaseClient
         .from('session_participants')
         .select('*')
         .eq('session_id', sessionId)
@@ -977,7 +977,7 @@
     });
 
     async function showFinalResults() {
-      await supabase
+      await supabaseClient
         .from('live_sessions')
         .update({ status: 'finished' })
         .eq('id', sessionId);
@@ -985,7 +985,7 @@
       document.getElementById('question-screen').style.display = 'none';
       document.getElementById('results-screen').style.display = 'block';
 
-      const { data: finalParticipants } = await supabase
+      const { data: finalParticipants } = await supabaseClient
         .from('session_participants')
         .select('*')
         .eq('session_id', sessionId)
@@ -1002,7 +1002,7 @@
     }
 
     document.getElementById('close-btn').addEventListener('click', async () => {
-      await supabase.from('live_sessions').delete().eq('id', sessionId);
+      await supabaseClient.from('live_sessions').delete().eq('id', sessionId);
       window.location.href = 'dashboard.html';
     });
 

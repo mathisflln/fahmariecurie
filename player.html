@@ -201,7 +201,7 @@
   <script>
     const SUPABASE_URL = "https://ckfdysasgawyixbxjyfz.supabase.co";
     const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNrZmR5c2FzZ2F3eWl4YnhqeWZ6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE5ODg1NjcsImV4cCI6MjA3NzU2NDU2N30.t0ubaRk5sz7kewyEsOg4CpFvj47S9U1J1SP_3DQBmE8";
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     let sessionId = null;
     let participantId = null;
@@ -234,7 +234,7 @@
 
       try {
         // Find session by code
-        const { data: session, error: sessionError } = await supabase
+        const { data: session, error: sessionError } = await supabaseClient
           .from('live_sessions')
           .select('*')
           .eq('code', code)
@@ -253,7 +253,7 @@
         sessionId = session.id;
 
         // Check if nickname is already taken in this session
-        const { data: existingParticipants } = await supabase
+        const { data: existingParticipants } = await supabaseClient
           .from('session_participants')
           .select('nickname')
           .eq('session_id', sessionId)
@@ -265,7 +265,7 @@
         }
 
         // Join session
-        const { data: participant, error: joinError } = await supabase
+        const { data: participant, error: joinError } = await supabaseClient
           .from('session_participants')
           .insert([{
             session_id: sessionId,
@@ -303,7 +303,7 @@
     }
 
     function subscribeToSession() {
-      supabase
+      supabaseClient
         .channel('session-updates')
         .on('postgres_changes', {
           event: 'UPDATE',
@@ -326,7 +326,7 @@
       hasAnswered = false;
       
       // Get quiz data
-      const { data: quiz } = await supabase
+      const { data: quiz } = await supabaseClient
         .from('quizzes')
         .select('questions')
         .eq('id', session.quiz_id)
@@ -344,7 +344,7 @@
       document.getElementById('result-message').style.display = 'none';
 
       // Rafraîchir le score actuel depuis le serveur
-      const { data: participant } = await supabase
+      const { data: participant } = await supabaseClient
         .from('session_participants')
         .select('score')
         .eq('id', participantId)
@@ -414,7 +414,7 @@
       const maxAttempts = 50; // 5 secondes max
     
       while (attempts < maxAttempts) {
-        const { data } = await supabase
+        const { data } = await supabaseClient
           .from('participant_answers')
           .select('answer_index, is_correct, points_earned')
           .eq('session_id', sessionId)
@@ -434,7 +434,7 @@
     
       if (answer) {
         // Récupérer le score total mis à jour depuis le serveur
-        const { data: participant } = await supabase
+        const { data: participant } = await supabaseClient
           .from('session_participants')
           .select('score')
           .eq('id', participantId)
@@ -481,7 +481,7 @@
     
       // Submit answer (le temps sera calculé par le serveur via created_at)
       try {
-        await supabase
+        await supabaseClient
           .from('participant_answers')
           .insert([{
             session_id: sessionId,
@@ -513,13 +513,13 @@
 
     async function showFinalScreen() {
       // Get final score and rank
-      const { data: participant } = await supabase
+      const { data: participant } = await supabaseClient
         .from('session_participants')
         .select('score')
         .eq('id', participantId)
         .single();
 
-      const { data: allParticipants } = await supabase
+      const { data: allParticipants } = await supabaseClient
         .from('session_participants')
         .select('score')
         .eq('session_id', sessionId)
