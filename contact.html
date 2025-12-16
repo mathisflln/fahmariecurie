@@ -553,7 +553,7 @@
 
             try {
                 // Sauvegarder dans Supabase - méthode simplifiée
-                const { error } = await supabase
+                const { error } = await supabaseClient
                     .from('contact_messages')
                     .insert({
                         name: formData.name,
