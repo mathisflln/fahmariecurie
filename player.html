@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rejoindre Quiz - FAH</title>
+  <title>Rejoindre Quiz - FAH Marie-Curie</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Stack+Sans+Headline:wght@200..700&display=swap" rel="stylesheet">
@@ -12,144 +12,344 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { 
       font-family: "Stack Sans Headline", sans-serif; 
-      background: linear-gradient(135deg, #FFFF10 0%, #FFFF10 100%); 
+      background: #FAFAFA;
       min-height: 100vh; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
+      display: flex;
+      flex-direction: column;
       padding: 20px; 
     }
-    .container { width: 100%; max-width: 500px; }
-    .card { background: white; border-radius: 20px; padding: 40px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
-    h1 { font-size: 2rem; font-weight: 700; text-align: center; margin-bottom: 30px; color: #0d0d0d; }
-    .input-group { margin-bottom: 20px; }
-    label { display: block; font-weight: 600; margin-bottom: 8px; color: #333; }
+    
+    /* HEADER */
+    .header {
+      max-width: 600px;
+      width: 100%;
+      margin: 0 auto 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .logo {
+      height: 40px;
+      width: auto;
+    }
+    
+    /* CONTAINER */
+    .container { 
+      width: 100%; 
+      max-width: 600px; 
+      margin: 0 auto;
+      flex: 1;
+    }
+    
+    .card { 
+      background: white; 
+      border-radius: 15px; 
+      padding: 40px; 
+      border: 1px solid #e5e5e5;
+    }
+    
+    /* JOIN SCREEN */
+    #join-screen h1 {
+      font-size: 2rem;
+      font-weight: 600;
+      color: #0d0d0d;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .input-group { 
+      margin-bottom: 20px; 
+    }
+    
+    label { 
+      display: block; 
+      font-weight: 500; 
+      margin-bottom: 8px; 
+      color: #0d0d0d;
+      font-size: 0.95rem;
+    }
+    
     input { 
       width: 100%; 
       padding: 15px; 
-      border: 2px solid #e5e5e5; 
-      border-radius: 10px; 
+      border: 1px solid #e5e5e5; 
+      border-radius: 8px; 
       font-family: inherit; 
       font-size: 1rem; 
-      transition: all 0.3s; 
+      font-weight: 300;
+      transition: all 0.2s;
+      color: #0d0d0d;
     }
-    input:focus { outline: none; border-color: #667eea; }
+    
+    input:focus { 
+      outline: none; 
+      border-color: #0d0d0d;
+    }
+    
     .btn { 
       width: 100%; 
-      padding: 15px; 
+      padding: 15px 30px; 
       border: none; 
-      border-radius: 50px; 
+      border-radius: 8px; 
       background: #0d0d0d; 
       color: white; 
       font-family: inherit; 
       font-size: 1rem; 
-      font-weight: 600; 
+      font-weight: 500; 
       cursor: pointer; 
-      transition: all 0.3s; 
+      transition: all 0.2s; 
     }
-    .btn:hover { background: #2d2d2d; transform: translateY(-2px); }
-    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    
+    .btn:hover:not(:disabled) { 
+      background: #2d2d2d;
+    }
+    
+    .btn:disabled { 
+      opacity: 0.5; 
+      cursor: not-allowed; 
+    }
+    
     .error { 
       background: #fee; 
       color: #c33; 
-      padding: 12px; 
+      padding: 12px 20px; 
       border-radius: 8px; 
       margin-bottom: 20px; 
-      text-align: center; 
+      text-align: center;
+      border: 1px solid #fcc;
+      font-size: 0.95rem;
     }
-    .waiting-screen, .game-screen { display: none; }
+    
+    /* WAITING SCREEN */
+    .waiting-screen { 
+      display: none; 
+    }
+    
+    .waiting-screen h1 {
+      font-size: 2rem;
+      font-weight: 600;
+      color: #0d0d0d;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
     .waiting-message { 
       text-align: center; 
-      font-size: 1.2rem; 
+      font-size: 1.1rem; 
       color: #666; 
-      margin: 30px 0; 
+      margin: 30px 0;
+      font-weight: 300;
+      line-height: 1.6;
     }
+    
+    .waiting-message strong {
+      color: #0d0d0d;
+      font-weight: 500;
+    }
+    
     .spinner { 
       width: 50px; 
       height: 50px; 
-      border: 4px solid #f3f3f3; 
-      border-top: 4px solid #667eea; 
+      border: 3px solid #f3f3f3; 
+      border-top: 3px solid #0d0d0d; 
       border-radius: 50%; 
       animation: spin 1s linear infinite; 
       margin: 20px auto; 
     }
-    @keyframes spin { to { transform: rotate(360deg); } }
+    
+    @keyframes spin { 
+      to { transform: rotate(360deg); } 
+    }
+    
+    /* GAME SCREEN */
+    .game-screen { 
+      display: none; 
+    }
+    
+    .timer-display { 
+      text-align: center; 
+      font-size: 2rem; 
+      font-weight: 700; 
+      color: #0d0d0d; 
+      margin-bottom: 20px;
+      padding: 20px;
+      background: #f8f9fa;
+      border-radius: 10px;
+      border: 1px solid #e5e5e5;
+    }
+    
+    .timer-display.warning { 
+      color: #c33;
+      background: #fee;
+      border-color: #fcc;
+      animation: pulse 1s infinite; 
+    }
+    
+    @keyframes pulse { 
+      0%, 100% { opacity: 1; } 
+      50% { opacity: 0.5; } 
+    }
+    
     .question-text { 
       font-size: 1.5rem; 
       font-weight: 600; 
       text-align: center; 
       margin-bottom: 30px; 
-      color: #0d0d0d; 
+      color: #0d0d0d;
+      line-height: 1.3;
     }
-    .timer-display { 
+    
+    .score-display { 
       text-align: center; 
+      margin: 20px 0 30px; 
+      padding: 20px; 
+      background: #FFFF10; 
+      border-radius: 10px;
+    }
+    
+    .score-label { 
+      font-size: 0.95rem; 
+      color: #666;
+      font-weight: 400;
+      margin-bottom: 5px;
+    }
+    
+    .score-value { 
       font-size: 2rem; 
       font-weight: 700; 
-      color: #667eea; 
-      margin-bottom: 20px; 
+      color: #0d0d0d; 
     }
-    .timer-display.warning { color: #e74c3c; }
-    .options-grid { display: grid; gap: 15px; }
+    
+    .options-grid { 
+      display: grid; 
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+    
     .option-btn { 
-      padding: 20px; 
+      padding: 25px 20px; 
       border: none; 
-      border-radius: 15px; 
+      border-radius: 12px; 
       font-family: inherit; 
       font-size: 1.1rem; 
-      font-weight: 600; 
+      font-weight: 500; 
       color: white; 
       cursor: pointer; 
-      transition: all 0.3s; 
+      transition: all 0.3s;
+      border: 3px solid transparent;
     }
-    .option-btn:hover:not(:disabled) { transform: scale(1.05); }
-    .option-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+    
+    .option-btn:hover:not(:disabled) { 
+      transform: scale(1.02);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    
+    .option-btn:disabled { 
+      opacity: 0.8; 
+      cursor: not-allowed; 
+    }
+    
     .option-btn.selected { 
-      border: 4px solid white; 
-      box-shadow: 0 0 20px rgba(255,255,255,0.5); 
+      border: 3px solid #0d0d0d;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      transform: scale(1.02);
     }
-    .option-a { background: #e74c3c; }
-    .option-b { background: #3498db; }
-    .option-c { background: #f39c12; }
-    .option-d { background: #2ecc71; }
+    
+    .option-a { background: #fef2d6; color: #765308; }
+    .option-b { background: #c5d7ff; color: #0a1944; }
+    .option-c { background: #fce0f8; color: #c31fa0; }
+    .option-d { background: #feefeb; color: #6f1808;}
+    
     .result-message { 
       text-align: center; 
       padding: 30px; 
-      font-size: 1.3rem; 
-      font-weight: 600; 
+      font-size: 1.2rem; 
+      font-weight: 500;
+      display: none;
+      background: #f8f9fa;
+      border-radius: 10px;
+      border: 1px solid #e5e5e5;
+      margin-top: 20px;
     }
-    .result-correct { color: #2ecc71; }
-    .result-wrong { color: #e74c3c; }
-    .result-icon { font-size: 3rem; margin-bottom: 10px; }
-    .score-display { 
-      text-align: center; 
-      margin: 20px 0; 
-      padding: 20px; 
-      background: linear-gradient(135deg, #FFFF10 0%, #fff4a4 100%); 
-      border-radius: 15px; 
+    
+    .result-icon { 
+      font-size: 3rem; 
+      margin-bottom: 15px; 
     }
-    .score-label { font-size: 0.9rem; color: #666; }
-    .score-value { font-size: 2rem; font-weight: 700; color: #0d0d0d; }
-    .final-screen { display: none; }
+    
+    .result-correct { 
+      color: #2ecc71;
+      font-weight: 600;
+    }
+    
+    .result-wrong { 
+      color: #e74c3c;
+      font-weight: 600;
+    }
+    
+    .result-message .spinner {
+      margin: 10px auto;
+    }
+    
+    /* FINAL SCREEN */
+    .final-screen { 
+      display: none; 
+    }
+    
     .final-title { 
       font-size: 2.5rem; 
       font-weight: 700; 
       text-align: center; 
-      margin-bottom: 20px; 
+      margin-bottom: 20px;
+      color: #0d0d0d;
     }
+    
     .final-rank { 
       text-align: center; 
-      font-size: 1.5rem; 
-      color: #667eea; 
-      margin-bottom: 30px; 
+      font-size: 1.3rem; 
+      color: #666;
+      font-weight: 400;
+      margin-bottom: 30px;
+    }
+    
+    .final-rank strong {
+      color: #0d0d0d;
+      font-weight: 600;
+    }
+    
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .card {
+        padding: 25px 20px;
+      }
+      
+      .question-text {
+        font-size: 1.3rem;
+      }
+      
+      .timer-display {
+        font-size: 1.5rem;
+        padding: 15px;
+      }
+      
+      .final-title {
+        font-size: 2rem;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- HEADER -->
+  <div class="header">
+    <img src="assets/logos/fah.png" alt="FAH Marie-Curie" class="logo">
+  </div>
+
   <div class="container">
     <div class="card">
       <!-- JOIN SCREEN -->
       <div id="join-screen">
-        <h1>🎯 Rejoindre le Quiz</h1>
+        <h1>Rejoindre le Quiz</h1>
         <div id="error-message" class="error" style="display:none;"></div>
         <form id="join-form">
           <div class="input-group">
@@ -176,14 +376,18 @@
 
       <!-- GAME SCREEN -->
       <div id="game-screen" class="game-screen">
-        <div class="timer-display" id="timer"></div>
-        <div class="question-text" id="question-text"></div>
+        <div class="timer-display" id="timer">⏱️ 30s</div>
+        
         <div class="score-display">
           <div class="score-label">Votre score</div>
           <div class="score-value" id="score">0</div>
         </div>
+        
+        <div class="question-text" id="question-text"></div>
+
         <div class="options-grid" id="options-grid"></div>
-        <div id="result-message" class="result-message" style="display:none;"></div>
+        
+        <div id="result-message" class="result-message"></div>
       </div>
 
       <!-- FINAL SCREEN -->
@@ -334,7 +538,7 @@
     
       const questions = typeof quiz.questions === 'string' ? JSON.parse(quiz.questions) : quiz.questions;
       currentQuestion = questions[session.current_question_index];
-      currentQuestion.index = session.current_question_index; // Ajouter l'index
+      currentQuestion.index = session.current_question_index;
     
       questionStartTime = new Date(session.question_start_time).getTime();
     
@@ -371,7 +575,7 @@
         optionsGrid.appendChild(btn);
       });
     
-      // Start timer normalement
+      // Start timer
       startTimer(currentQuestion.timeLimit || 30);
     }
 
@@ -396,7 +600,6 @@
         if (timeLeft <= 0) {
           clearInterval(currentTimerInterval);
           disableOptions();
-          // Afficher le résultat après le temps écoulé
           displayQuestionResult();
         }
       }, 1000);
@@ -411,7 +614,7 @@
       // Attendre que le serveur ait calculé les scores (polling)
       let answer = null;
       let attempts = 0;
-      const maxAttempts = 50; // 5 secondes max
+      const maxAttempts = 50;
     
       while (attempts < maxAttempts) {
         const { data } = await supabaseClient
@@ -422,7 +625,6 @@
           .eq('question_index', currentQuestion.index || 0)
           .maybeSingle();
     
-        // Vérifier si le score a été calculé (is_correct n'est plus null)
         if (data && data.is_correct !== null) {
           answer = data;
           break;
@@ -433,7 +635,7 @@
       }
     
       if (answer) {
-        // Récupérer le score total mis à jour depuis le serveur
+        // Récupérer le score total mis à jour
         const { data: participant } = await supabaseClient
           .from('session_participants')
           .select('score')
@@ -445,27 +647,26 @@
           document.getElementById('score').textContent = currentScore;
         }
     
-        // Afficher le résultat avec les points gagnés
+        // Afficher le résultat
         if (answer.is_correct && answer.points_earned) {
-          const resultEl = document.getElementById('result-message');
           resultEl.innerHTML = `
             <div class="result-icon">✓</div>
             <div class="result-correct">Bonne réponse !</div>
-            <div style="color: #667eea; font-size: 1.1rem; margin-top: 10px;">+${answer.points_earned} points</div>
+            <div style="color: #0d0d0d; font-size: 1.1rem; margin-top: 10px; font-weight: 600;">+${answer.points_earned} points</div>
           `;
         } else {
           showResultMessage(false);
         }
       } else if (!hasAnswered) {
-        // Aucune réponse donnée
         showResultMessage(false);
       }
     }
+
     async function selectAnswer(answerIndex) {
       if (hasAnswered) return;
       hasAnswered = true;
     
-      // Visual feedback - juste sélectionner, pas de résultat
+      // Visual feedback
       const buttons = document.querySelectorAll('.option-btn');
       buttons.forEach((btn, i) => {
         if (i === answerIndex) {
@@ -476,10 +677,10 @@
     
       // Afficher message d'attente
       const resultEl = document.getElementById('result-message');
-      resultEl.innerHTML = '<div class="result-icon">⏳</div><div style="color: #667eea;">Réponse enregistrée ! En attente des résultats...</div>';
+      resultEl.innerHTML = '<div class="result-icon">⏳</div><div style="color: #0d0d0d;">Réponse enregistrée ! En attente des résultats...</div>';
       resultEl.style.display = 'block';
     
-      // Submit answer (le temps sera calculé par le serveur via created_at)
+      // Submit answer
       try {
         await supabaseClient
           .from('participant_answers')
@@ -529,7 +730,7 @@
 
       document.getElementById('game-screen').style.display = 'none';
       document.getElementById('final-screen').style.display = 'block';
-      document.getElementById('final-rank').textContent = `Vous êtes #${rank} sur ${allParticipants.length}`;
+      document.getElementById('final-rank').innerHTML = `Vous êtes <strong>#${rank}</strong> sur <strong>${allParticipants.length}</strong>`;
       document.getElementById('final-score').textContent = participant.score;
     }
   </script>
