@@ -345,7 +345,7 @@
 
 .year {
     font-size: 1.5rem;
-    font-weight: 500;
+    font-weight: 300;
     color: black;
 }
 
@@ -378,5 +378,24 @@
 
     .year {
         font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 562px) {
+    .chart-container {
+        gap: 40px;
+        height: 520px;
+    }
+
+    .bar {
+        width: 120px;
+    }
+
+    .percentage {
+        font-size: 2.6rem;
+    }
+
+    .year {
+        font-size: 1.1rem;
     }
 }
