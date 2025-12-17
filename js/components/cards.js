@@ -60,3 +60,25 @@ window.FAH.initStackedCards = function() {
   // Initialisation au chargement
   updateStackedCards();
 };
+
+
+
+const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const bars = entry.target.querySelectorAll('.bar');
+            bars.forEach(bar => {
+                bar.classList.add('animate');
+            });
+            statsObserver.unobserve(entry.target);
+        }
+    });
+}, {
+    threshold: 0.3,
+    rootMargin: '0px 0px -100px 0px'
+});
+
+const statsSection = document.querySelector('.stats-section');
+if (statsSection) {
+    statsObserver.observe(statsSection);
+}
