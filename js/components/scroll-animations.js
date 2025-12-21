@@ -244,12 +244,21 @@ window.FAH.initGSAPTextAnimation = function() {
   const animeTextContainers = document.querySelectorAll(".anime-text-container");
 
   animeTextContainers.forEach((container) => {
+    // ScrollTrigger séparé JUSTE pour le pin (plus court)
     ScrollTrigger.create({
       trigger: container,
       pin: container,
       start: "top top",
-      end: `+=${window.innerHeight * 4}`,
+      end: `+=${window.innerHeight * 2}`, // Libère le pin plus tôt
       pinSpacing: true,
+    });
+
+    // ScrollTrigger pour l'animation (plus long pour gérer la disparition)
+    ScrollTrigger.create({
+      trigger: container,
+      start: "top top",
+      end: `+=${window.innerHeight * 4}`, // Animation continue même après le unpin
+      scrub: true,
       onUpdate: (self) => {
         const progress = self.progress;
         const words = Array.from(container.querySelectorAll(".anime-text .word"));
@@ -258,9 +267,9 @@ window.FAH.initGSAPTextAnimation = function() {
         words.forEach((word, index) => {
           const wordText = word.querySelector("span");
 
-          if (progress <= 0.7) {
-            const progressTarget = 0.7;
-            const revealProgress = Math.min(1, progress / progressTarget);
+          if (progress <= 0.5) {
+            // Phase d'apparition (0 à 0.5)
+            const revealProgress = progress / 0.5;
 
             const overlapWords = 15;
             const totalAnimationLength = 1 + overlapWords / totalWords;
@@ -286,7 +295,8 @@ window.FAH.initGSAPTextAnimation = function() {
             const textRevealProgress = wordProgress >= textRevealThreshold ? (wordProgress - textRevealThreshold) / (1 - textRevealThreshold) : 0;
             wordText.style.opacity = Math.pow(textRevealProgress, 0.5);
           } else {
-            const reverseProgress = (progress - 0.7) / 0.3;
+            // Phase de disparition (après 0.5) - le scroll est déjà débloqué
+            const reverseProgress = (progress - 0.5) / 0.5;
             word.style.opacity = 1;
             const targetTextOpacity = 1;
 
