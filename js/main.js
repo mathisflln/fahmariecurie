@@ -49,6 +49,12 @@ function initApp() {
     window.FAH.initHeroScrollEffects();
     console.log('✓ Effets hero initialisés');
   }
+
+  // Animations GSAP
+  if (window.FAH.initGSAPTextAnimation) {
+    window.FAH.initGSAPTextAnimation();
+    console.log('✓ Animation GSAP initialisée');
+  }
   
   // Cartes empilées
   if (window.FAH.initStackedCards) {
