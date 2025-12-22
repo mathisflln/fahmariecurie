@@ -4,6 +4,7 @@
   padding: 120px 20px;
   max-width: 1400px;
   margin: 0 auto;
+  overflow: hidden;
 }
 
 /* ===== HEADER ===== */
@@ -126,11 +127,11 @@
 }
 
 /* ===== RESPONSIVE TABLET ===== */
-@media (max-width: 992px) {
+@media (max-width: 1000px) {
   .floating-image {
     width: 200px;
     right: -20%;
-    top: 80px;
+    top: 130px;
   }
   
   .situation-box {
@@ -154,7 +155,8 @@
   }
   
   .floating-image {
-    display: none;
+    top: 165px;
+    right: -23%;
   }
   
   .situation-boxes {
@@ -163,7 +165,6 @@
   
   .situation-box {
     width: 100%;
-    max-width: 500px;
     padding: 25px;
   }
 }
