@@ -23,6 +23,12 @@ function initApp() {
     return;
   }
   
+  // Détecter la page actuelle
+  const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+  const isAgirPage = currentPage === 'agir.html';
+  
+  console.log(`📄 Page actuelle: ${currentPage}`);
+  
   // Navigation
   if (window.FAH.initNavbar) {
     window.FAH.initNavbar();
@@ -50,10 +56,21 @@ function initApp() {
     console.log('✓ Effets hero initialisés');
   }
 
-  // Animations GSAP
-  if (window.FAH.initGSAPTextAnimation) {
-    window.FAH.initGSAPTextAnimation();
-    console.log('✓ Animation GSAP initialisée');
+  // ⚠️ IMPORTANT: Lenis et scroll horizontal sont incompatibles
+  if (isAgirPage) {
+    // Sur la page Agir: scroll horizontal SANS Lenis
+    console.log('🔄 Mode scroll horizontal activé (Lenis désactivé)');
+    if (window.FAH.initHorizontalScroll) {
+      window.FAH.initHorizontalScroll();
+      console.log('✓ Scroll horizontal initialisé');
+    }
+  } else {
+    // Sur les autres pages: GSAP avec Lenis
+    console.log('🔄 Mode scroll normal activé (Lenis + GSAP)');
+    if (window.FAH.initGSAPTextAnimation) {
+      window.FAH.initGSAPTextAnimation();
+      console.log('✓ Animation GSAP initialisée');
+    }
   }
   
   // Cartes empilées

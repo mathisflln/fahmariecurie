@@ -173,6 +173,7 @@ window.FAH.initHeroScrollEffects = function() {
 
 /**
  * Animation GSAP des mots qui apparaissent au scroll
+ * NE PAS UTILISER sur les pages avec scroll horizontal
  */
 window.FAH.initGSAPTextAnimation = function() {
   // Vérifier que GSAP est chargé
@@ -244,20 +245,18 @@ window.FAH.initGSAPTextAnimation = function() {
   const animeTextContainers = document.querySelectorAll(".anime-text-container");
 
   animeTextContainers.forEach((container) => {
-    // ScrollTrigger séparé JUSTE pour le pin (plus court)
     ScrollTrigger.create({
       trigger: container,
       pin: container,
       start: "top top",
-      end: `+=${window.innerHeight * 2}`, // Libère le pin plus tôt
+      end: `+=${window.innerHeight * 2}`,
       pinSpacing: true,
     });
 
-    // ScrollTrigger pour l'animation (plus long pour gérer la disparition)
     ScrollTrigger.create({
       trigger: container,
       start: "top top",
-      end: `+=${window.innerHeight * 4}`, // Animation continue même après le unpin
+      end: `+=${window.innerHeight * 4}`,
       scrub: true,
       onUpdate: (self) => {
         const progress = self.progress;
@@ -268,25 +267,18 @@ window.FAH.initGSAPTextAnimation = function() {
           const wordText = word.querySelector("span");
 
           if (progress <= 0.5) {
-            // Phase d'apparition (0 à 0.5)
             const revealProgress = progress / 0.5;
-
             const overlapWords = 15;
             const totalAnimationLength = 1 + overlapWords / totalWords;
-
             const wordStart = index / totalWords;
             const wordEnd = wordStart + overlapWords / totalWords;
-
             const timelineScale = 1 / Math.min(totalAnimationLength, 1 + (totalWords - 1) / totalWords + overlapWords / totalWords);
-            
             const adjustedStart = wordStart * timelineScale;
             const adjustedEnd = wordEnd * timelineScale;
             const duration = adjustedEnd - adjustedStart;
-
             const wordProgress = revealProgress <= adjustedStart ? 0 : revealProgress >= adjustedEnd ? 1 : (revealProgress - adjustedStart) / duration;
 
             word.style.opacity = wordProgress;
-
             const backgroundFadeStart = wordProgress >= 0.9 ? (wordProgress - 0.9) / 0.1 : 0;
             const backgroundOpacity = Math.max(0, 1 - backgroundFadeStart);
             word.style.backgroundColor = `rgba(${wordHighlightBgColor}, ${backgroundOpacity})`;
@@ -295,26 +287,17 @@ window.FAH.initGSAPTextAnimation = function() {
             const textRevealProgress = wordProgress >= textRevealThreshold ? (wordProgress - textRevealThreshold) / (1 - textRevealThreshold) : 0;
             wordText.style.opacity = Math.pow(textRevealProgress, 0.5);
           } else {
-            // Phase de disparition (après 0.5) - le scroll est déjà débloqué
             const reverseProgress = (progress - 0.5) / 0.5;
             word.style.opacity = 1;
             const targetTextOpacity = 1;
-
             const reverseOverlapWords = 5;
             const reverseWordStart = index / totalWords;
             const reverseWordEnd = reverseWordStart + reverseOverlapWords / totalWords;
-
             const reverseTimelineScale = 1 / Math.max(1, (totalWords - 1) / totalWords + reverseOverlapWords / totalWords);
-
             const reverseAdjustedStart = reverseWordStart * reverseTimelineScale;
             const reverseAdjustedEnd = reverseWordEnd * reverseTimelineScale;
             const reverseDuration = reverseAdjustedEnd - reverseAdjustedStart;
-
-            const reverseWordProgress = reverseProgress <= reverseAdjustedStart 
-              ? 0 
-              : reverseProgress >= reverseAdjustedEnd 
-              ? 1 
-              : (reverseProgress - reverseAdjustedStart) / reverseDuration;
+            const reverseWordProgress = reverseProgress <= reverseAdjustedStart ? 0 : reverseProgress >= reverseAdjustedEnd ? 1 : (reverseProgress - reverseAdjustedStart) / reverseDuration;
 
             if (reverseWordProgress > 0) {
               wordText.style.opacity = targetTextOpacity * (1 - reverseWordProgress);
@@ -328,4 +311,44 @@ window.FAH.initGSAPTextAnimation = function() {
       },
     });
   });
+};
+
+/**
+ * Animation GSAP - Scroll horizontal pour la page "Agir"
+ * Cette fonction doit être appelée SANS Lenis
+ */
+window.FAH.initHorizontalScroll = function() {
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+    console.error('❌ GSAP ou ScrollTrigger non chargé');
+    return;
+  }
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const stepsHorizontal = document.querySelector('.steps-horizontal');
+  const stepsTrack = document.getElementById('stepsTrack');
+
+  if (!stepsHorizontal || !stepsTrack) {
+    console.log('ℹ️ Éléments du scroll horizontal non trouvés (normal si pas sur la page Agir)');
+    return;
+  }
+
+  // Réinitialiser ScrollTrigger pour éviter les conflits
+  ScrollTrigger.refresh();
+
+  gsap.to(stepsTrack, {
+    x: () => -(stepsTrack.scrollWidth - window.innerWidth),
+    ease: 'none',
+    scrollTrigger: {
+      trigger: stepsHorizontal,
+      start: 'top top',
+      end: () => `+=${stepsHorizontal.offsetHeight}`,
+      scrub: 1,
+      pin: '.steps-container',
+      anticipatePin: 1,
+      invalidateOnRefresh: true
+    }
+  });
+
+  console.log('✅ Scroll horizontal initialisé');
 };

@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Over+the+Rainbow&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Stack+Sans+Headline:wght@200..700&display=swap" rel="stylesheet">
     
-    <!-- CSS -->
+    <!-- CSS - UN SEUL FICHIER QUI IMPORTE TOUT -->
     <link rel="stylesheet" href="css/main.css">
     
     <!-- Font Awesome -->
@@ -73,49 +73,50 @@
         <h1>Victime, témoin, proche :<br> comment agir face au harcèlement ?</h1>
     </section>
 
-    <section class="situation-section">
-        <div class="situation-header">
-            <img src="assets/images/situations.png" class="floating-image">
-            <h2>Trois <span class="highlight-word1">situations</span>, trois manières d'agir</h2>
-            <p>
-                Peu importe où tu te trouves face au harcèlement, il existe toujours quelque chose que tu peux faire.
-            </p>
+
+
+
+    <section class="hero11">
+        <div class="copy-container">
+            <h1>Il s'agit du premier titre de la page</h1>
         </div>
-
-        <div class="situation-boxes">
-            <div class="situation-box">
-                <h3>Si tu subis du harcèlement</h3>
-                <span>La première chose à savoir : ce n'est pas de ta faute. Le harcèlement n'est jamais justifié, et tu as le droit de demander de l'aide.</span>
-                <ul>
-                    <li>Parle-en à un adulte de confiance (parent, professeur, CPE, infirmier·ère scolaire)</li>
-                    <li>Garde des preuves si possible (captures d'écran, messages)</li>
-                    <li>Ne reste pas isolé·e : rapproche-toi de personnes bienveillantes</li>
-                    <li>Contacte le 3018 (gratuit et confidentiel)</li>
-                </ul>
-            </div>
-
-            <div class="situation-box">
-                <h3>Si tu es témoin</h3>
-                <span>Être témoin, c'est aussi être acteur. Ton rôle est crucial pour stopper le harcèlement et soutenir la victime.</span>
-                <ul>
-                    <li>Ne participe jamais, même passivement (liker, partager, rire)</li>
-                    <li>Soutiens la victime en privé : montre-lui qu'elle n'est pas seule</li>
-                    <li>Signale la situation à un adulte responsable de ton établissement</li>
-                    <li>Encourage la victime à parler sans la forcer</li>
-                </ul>
-            </div>
-
-            <div class="situation-box">
-                <h3>Si tu veux t'engager dans la prévention</h3>
-                <span>Agir en amont, c'est empêcher le harcèlement avant qu'il ne commence. Voici comment contribuer activement.</span>
-                <ul>
-                    <li>Diffuse les bons réflexes autour de toi dans ton établissement</li>
-                    <li>Crée un climat bienveillant : inclus, écoute, respecte</li>
-                    <li>Soutiens des initiatives locales comme la FAH</li>
-                </ul>
+    </section>
+    <section class="about11 anime-text-container">
+        <div class="copy-container">
+            <div class="anime-text">
+                <p>
+                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloribus minus commodi ea nostrum, totam dolores facere dicta incidunt accusamus veritatis? Possimus debitis iure repudiandae dolore asperiores laborum necessitatibus assumenda animi!
+                </p>
+                <p>
+                    Lorem ipsum dolor clarity sit amet consectetur adipisicing elit. Accusantium distinctio esse laboriosam suscipit quas magni iusto optio? Eos molestias tempora fugit laudantium dolore, living cum sint est suscipit corrupti facilis praesentium. Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis quia ducimus necessitatibus, ipsa voluptate reprehenderit error quis incidunt quasi non asperiores, eaque consequuntur tempora voluptatem ad sunt, obcaecati ea magnam.
+                </p>
             </div>
         </div>
     </section>
+    <section class="cta11">
+        <div class="copy-container">
+            <h1>Il s'agit du troisième titre de la page</h1>
+        </div>
+    </section>
+    <section class="features11 anime-text-container">
+        <div class="copy-container">
+            <div class="anime-text">
+                <p>
+                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Doloribus minus commodi ea nostrum, totam dolores facere dicta incidunt accusamus veritatis? Possimus debitis iure repudiandae dolore asperiores vibrant laborum necessitatibus assumenda animi! Lorem, ipsum dolor sit amet vision consectetur adipisicing elit. Suscipit commodi porro unde ipsam enim odio, nostrum maxime corrupti harum numquam facilis laudantium magnam voluptates a repudiandae amet deserunt ullam perferendis?
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium distinctio esse shape laboriosam suscipit quas magni iusto optio? Eos molestias tempora fugit laudantium dolore, cum sint est suscipit corrupti facilis praesentium.
+                </p>
+            </div>
+        </div>
+    </section>
+    <section class="outro11">
+        <div class="copy-container">
+            <h1>Enfin le dernier gros titre</h1>
+        </div>
+    </section>
+
+
 
 
 
@@ -216,6 +217,11 @@
     </footer>
 
     <!-- JAVASCRIPT - Charger les composants dans l'ordre puis main.js -->
+    <!-- GSAP et dépendances - AJOUTER AVANT tes autres scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+
     <script src="js/components/navbar.js"></script>
     <script src="js/components/scroll-animations.js"></script>
     <script src="js/components/cards.js"></script>
