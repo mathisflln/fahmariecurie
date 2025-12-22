@@ -67,6 +67,15 @@
     }
 
     loadArticles();
+
+    const excerpt = article.content.length > 120 ? article.content.substr(0, 120) + "..." : article.content;
+    div.innerHTML = `
+    <h2>${article.title}</h2>
+    <p>${marked.parse(excerpt)}</p>
+    <a class="read-more" href="article.html?slug=${article.slug}">Lire plus →</a>
+    `;
+
+
   </script>
 
 </body>
