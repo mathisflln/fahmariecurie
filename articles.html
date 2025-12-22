@@ -7,6 +7,7 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Stack+Sans+Headline:wght@200..700&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
   <style>
     body { font-family: "Stack Sans Headline", sans-serif; background: #fff; margin:0; padding:40px; }
@@ -53,29 +54,22 @@
 
       container.innerHTML = "";
 
-      articles.forEach(article => {
-        const excerpt = article.content.length > 120 ? article.content.substr(0, 120) + "..." : article.content;
+        articles.forEach(article => {
+        const excerptText = article.content.length > 120 ? article.content.substr(0, 120) + "..." : article.content;
+        const excerptHTML = marked.parse(excerptText); // <-- Markdown en HTML
         const div = document.createElement("div");
         div.className = "article";
         div.innerHTML = `
-          <h2>${article.title}</h2>
-          <p>${excerpt}</p>
-          <a class="read-more" href="article.html?slug=${article.slug}">Lire plus →</a>
+            <h2>${article.title}</h2>
+            <div>${excerptHTML}</div>
+            <a class="read-more" href="article.html?slug=${article.slug}">Lire plus →</a>
         `;
         container.appendChild(div);
-      });
+        });
     }
 
     loadArticles();
-
-    const excerpt = article.content.length > 120 ? article.content.substr(0, 120) + "..." : article.content;
-    div.innerHTML = `
-    <h2>${article.title}</h2>
-    <p>${marked.parse(excerpt)}</p>
-    <a class="read-more" href="article.html?slug=${article.slug}">Lire plus →</a>
-    `;
-
-
+    
   </script>
 
 </body>
